@@ -1,0 +1,943 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ujian BAB 1 Pendidikan Agama Katolik</title>
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Google Fonts: Poppins & Fredoka for Pixar-like playful feel -->
+    <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;600;700&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <!-- FontAwesome for Icons -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        pixar: ['Fredoka', 'sans-serif'],
+                        body: ['Poppins', 'sans-serif'],
+                    },
+                    colors: {
+                        pixarBlue: '#3b82f6',
+                        pixarYellow: '#f59e0b',
+                        pixarGreen: '#10b981',
+                        pixarPurple: '#8b5cf6',
+                        pixarPink: '#ec4899',
+                        pixarDark: '#1e293b',
+                    },
+                    boxShadow: {
+                        '3d': '0 8px 0 0 rgba(0, 0, 0, 0.15), 0 10px 20px rgba(0,0,0,0.1)',
+                        '3d-sm': '0 4px 0 0 rgba(0, 0, 0, 0.15), 0 4px 10px rgba(0,0,0,0.1)',
+                        '3d-active': '0 2px 0 0 rgba(0, 0, 0, 0.15), 0 2px 5px rgba(0,0,0,0.1)',
+                    }
+                }
+            }
+        }
+    </script>
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(135deg, #e0f2fe 0%, #fef3c7 50%, #fce7f3 100%);
+            min-height: 100vh;
+        }
+        .pixar-title {
+            font-family: 'Fredoka', sans-serif;
+            text-shadow: 3px 3px 0px #fbbf24, 5px 5px 0px rgba(0,0,0,0.1);
+        }
+        .btn-pixar {
+            transition: all 0.1s ease;
+            transform: translateY(0);
+        }
+        .btn-pixar:active {
+            transform: translateY(4px);
+            box-shadow: 0 2px 0 0 rgba(0,0,0,0.2) !important;
+        }
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-8px); }
+        }
+        .animate-float {
+            animation: float 3s ease-in-out infinite;
+        }
+        @media print {
+            body { background: white !important; }
+            .no-print { display: none !important; }
+            .print-only { display: block !important; }
+        }
+    </style>
+</head>
+<body class="text-pixarDark antialiased">
+
+    <!-- Global Toast / Modal Notification Container -->
+    <div id="toastContainer" class="fixed top-5 right-5 z-50 flex flex-col gap-3 max-w-sm w-full pointer-events-none"></div>
+
+    <!-- MAIN APP CONTAINER -->
+    <div id="app" class="max-w-4xl mx-auto px-4 py-6 min-h-screen flex flex-col justify-between">
+        
+        <!-- HEADER / NAVBAR -->
+        <header class="bg-white/80 backdrop-blur-md rounded-2xl p-4 shadow-3d-sm mb-6 flex flex-wrap items-center justify-between gap-4 no-print">
+            <div class="flex items-center gap-3">
+                <div class="w-12 h-12 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-2xl flex items-center justify-center shadow-3d-sm text-white text-2xl font-bold animate-float">
+                    ⛪
+                </div>
+                <div>
+                    <h1 class="font-pixar text-xl md:text-2xl font-bold text-pixarBlue tracking-wide">Ujian PAK Kelas 3</h1>
+                    <p class="text-xs text-gray-500 font-medium">SD Xaverius 8 Palembang • BAB 1</p>
+                </div>
+            </div>
+            <div id="navRight" class="flex items-center gap-2">
+                <button onclick="app.switchView('home')" class="px-4 py-2 bg-slate-100 hover:bg-slate-200 text-slate-700 font-semibold rounded-xl text-sm transition shadow-sm flex items-center gap-2">
+                    <i class="fas fa-home"></i> Beranda
+                </button>
+                <button onclick="app.openTeacherLoginModal()" class="px-4 py-2 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-semibold rounded-xl text-sm shadow-3d-sm btn-pixar flex items-center gap-2">
+                    <i class="fas fa-chalkboard-teacher"></i> Mode Guru
+                </button>
+            </div>
+        </header>
+
+        <!-- DYNAMIC CONTENT AREA -->
+        <main id="mainContent" class="flex-grow flex flex-col justify-center mb-6">
+            <!-- Rendered dynamically by JS -->
+        </main>
+
+        <!-- FOOTER -->
+        <footer class="text-center text-xs text-slate-500 py-4 font-medium no-print">
+            Pendidikan Agama Katolik dan Budi Pekerti • Kurikulum Merdeka &copy; 2026
+        </footer>
+    </div>
+
+    <!-- TEACHER LOGIN MODAL -->
+    <div id="teacherLoginModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-md w-full shadow-2xl transform transition-all">
+            <div class="text-center mb-6">
+                <div class="w-16 h-16 bg-purple-100 text-purple-600 rounded-3xl mx-auto flex items-center justify-center text-3xl shadow-inner mb-3">
+                    <i class="fas fa-lock"></i>
+                </div>
+                <h3 class="font-pixar text-2xl font-bold text-slate-800">Login Mode Guru</h3>
+                <p class="text-sm text-slate-500 mt-1">Masukkan sandi khusus untuk mengakses nilai siswa.</p>
+            </div>
+            <div class="space-y-4">
+                <div>
+                    <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Password Guru</label>
+                    <input type="password" id="teacherPasswordInput" placeholder="Masukkan password..." class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none font-medium text-slate-700">
+                </div>
+                <div class="flex gap-3 pt-2">
+                    <button onclick="app.closeTeacherLoginModal()" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Batal</button>
+                    <button onclick="app.verifyTeacherLogin()" class="flex-1 py-3 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-xl shadow-3d-sm btn-pixar">Masuk</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- STUDENT RESULT DETAIL MODAL -->
+    <div id="studentDetailModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 flex items-center justify-center p-4 hidden">
+        <div class="bg-white rounded-3xl p-6 md:p-8 max-w-2xl w-full shadow-2xl max-h-[90vh] flex flex-col">
+            <div class="flex items-center justify-between mb-4 border-b pb-3">
+                <div>
+                    <h3 id="modalStudentName" class="font-pixar text-xl font-bold text-slate-800">Nama Siswa</h3>
+                    <p id="modalStudentMeta" class="text-xs text-slate-500 font-medium">Kelas • Nilai</p>
+                </div>
+                <button onclick="app.closeStudentDetailModal()" class="w-10 h-10 bg-slate-100 hover:bg-slate-200 rounded-full flex items-center justify-center text-slate-600 transition">
+                    <i class="fas fa-times"></i>
+                </button>
+            </div>
+            <div id="modalStudentAnswersList" class="overflow-y-auto flex-grow space-y-3 pr-2">
+                <!-- Populated via JS -->
+            </div>
+            <div class="pt-4 border-t mt-4 text-right">
+                <button onclick="app.closeStudentDetailModal()" class="px-6 py-2.5 bg-slate-800 hover:bg-slate-900 text-white font-bold rounded-xl transition">Tutup</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- APPLICATION LOGIC -->
+    <script>
+        // Official Question Bank based on Uploaded Document
+        const questionBank = [
+            // SUBBAB 1: AKU BERTUMBUH DAN BERKEMBANG (Pilihan Ganda 1-10)
+            {
+                id: 1,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Tuhan memberi manusia anugerah untuk …",
+                options: ["bertumbuh dan berkembang", "menjadi kecil terus", "tidak berubah", "berhenti belajar"],
+                answer: "bertumbuh dan berkembang"
+            },
+            {
+                id: 2,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Waktu masih bayi, kita belum bisa …",
+                options: ["berlari kencang", "menulis surat", "membaca buku", "berjalan sendiri"],
+                answer: "berjalan sendiri"
+            },
+            {
+                id: 3,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Bertumbuh artinya badan kita menjadi …",
+                options: ["lebih kecil", "tetap sama", "lebih tinggi dan lebih besar", "hilang"],
+                answer: "lebih tinggi dan lebih besar"
+            },
+            {
+                id: 4,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Dulu belum bisa membaca, sekarang sudah bisa membaca. Ini disebut …",
+                options: ["tidak ada perubahan", "perkembangan kemampuan", "kemunduran", "kebetulan"],
+                answer: "perkembangan kemampuan"
+            },
+            {
+                id: 5,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Kemampuan tumbuh dan berkembang adalah …",
+                options: ["anugerah Tuhan", "hukuman", "mainan", "barang belian"],
+                answer: "anugerah Tuhan"
+            },
+            {
+                id: 6,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Sikap yang benar terhadap kemampuan dari Tuhan adalah …",
+                options: ["menyia-nyiakannya", "menyembunyikannya", "tidak peduli", "mengembangkannya dengan tanggung jawab"],
+                answer: "mengembangkannya dengan tanggung jawab"
+            },
+            {
+                id: 7,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Kita mengucap doa syukur atas pertumbuhan diri kepada …",
+                options: ["benda mati", "bayangan", "Tuhan", "hewan"],
+                answer: "Tuhan"
+            },
+            {
+                id: 8,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Perbedaan keadaan diri sebelum sekolah dan sekarang adalah …",
+                options: ["dulu sama persis dengan sekarang", "dulu belum bisa menulis, sekarang sudah bisa", "dulu lebih pandai", "tidak ada beda"],
+                answer: "dulu belum bisa menulis, sekarang sudah bisa"
+            },
+            {
+                id: 9,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Cara bersyukur atas pertumbuhan dan perkembangan diri adalah …",
+                options: ["berdoa dan rajin belajar", "bermalas-malasan", "mengeluh", "marah-marah"],
+                answer: "berdoa dan rajin belajar"
+            },
+            {
+                id: 10,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "pg",
+                question: "Di sekolah, guru membantu kita untuk …",
+                options: ["berhenti tumbuh", "menjadi malas", "melupakan Tuhan", "belajar dan berkembang"],
+                answer: "belajar dan berkembang"
+            },
+            // SUBBAB 1: ISIAN SINGKAT (11-15)
+            {
+                id: 11,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "isian",
+                question: "Kemampuan tumbuh dan berkembang adalah ____ dari Tuhan.",
+                answer: "anugerah"
+            },
+            {
+                id: 12,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "isian",
+                question: "Doa untuk berterima kasih kepada Tuhan disebut doa ____.",
+                answer: "syukur"
+            },
+            {
+                id: 13,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "isian",
+                question: "Anak yang baru lahir disebut ____.",
+                answer: "bayi"
+            },
+            {
+                id: 14,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "isian",
+                question: "Bertambahnya tinggi dan berat badan disebut ____.",
+                answer: "bertumbuh"
+            },
+            {
+                id: 15,
+                subbab: "Subbab 1: Aku Bertumbuh dan Berkembang",
+                type: "isian",
+                question: "Sebelum bersekolah, kita belum bisa ____ dan menulis.",
+                answer: "membaca"
+            },
+            // SUBBAB 2: SAYA MAMPU MEMBEDAKAN PERBUATAN BAIK DAN BURUK (Pilihan Ganda 16-25)
+            {
+                id: 16,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Memberi makan kelinci dengan sayang adalah perbuatan …",
+                options: ["buruk", "baik", "jahat", "tidak berguna"],
+                answer: "baik"
+            },
+            {
+                id: 17,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Memukul atau menyakiti hewan adalah perbuatan …",
+                options: ["buruk", "baik", "terpuji", "menyenangkan hewan"],
+                answer: "buruk"
+            },
+            {
+                id: 18,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Perbuatan baik menimbulkan …",
+                options: ["penderitaan", "kebencian", "permushuhan", "kegembiraan dan damai sejahtera"],
+                answer: "kegembiraan dan damai sejahtera"
+            },
+            {
+                id: 19,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Perbuatan buruk atau jahat menimbulkan …",
+                options: ["damai sejahtera", "kegembiraan", "penderitaan dan kebencian", "pujian"],
+                answer: "penderitaan dan kebencian"
+            },
+            {
+                id: 20,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Nasihat Rasul Paulus adalah …",
+                options: ["balaslah kejahatan dengan kejahatan", "kalahkanlah kejahatan dengan kebaikan", "jauhilah semua orang", "diam saja saat marah"],
+                answer: "kalahkanlah kejahatan dengan kebaikan"
+            },
+            {
+                id: 21,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Temanmu berbuat jahat kepadamu. Sebaiknya kamu …",
+                options: ["tetap berbuat baik kepadanya", "membalas dengan jahat", "memusuhinya", "mengejeknya"],
+                answer: "tetap berbuat baik kepadanya"
+            },
+            {
+                id: 22,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Setiap perbuatan baik akan mendapat …",
+                options: ["hukuman", "kebencian", "denda", "pujian atau penghargaan"],
+                answer: "pujian atau penghargaan"
+            },
+            {
+                id: 23,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Salah satu bentuk hukuman bagi perbuatan buruk adalah …",
+                options: ["diberi hadiah", "dipuji", "dikucilkan dari masyarakat", "diberi permen"],
+                answer: "dikucilkan dari masyarakat"
+            },
+            {
+                id: 24,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Menolong teman yang terjatuh adalah perbuatan …",
+                options: ["buruk", "baik", "jahat", "tidak penting"],
+                answer: "baik"
+            },
+            {
+                id: 25,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "pg",
+                question: "Tuhan memberi kita kemampuan untuk …",
+                options: ["melakukan yang baik dan menolak yang jahat", "berbuat jahat", "membalas dendam", "malas berbuat baik"],
+                answer: "melakukan yang baik dan menolak yang jahat"
+            },
+            // SUBBAB 2: ISIAN SINGKAT (26-30)
+            {
+                id: 26,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "isian",
+                question: "Perbuatan manusia ada yang baik dan ada yang ____ atau jahat.",
+                answer: "buruk"
+            },
+            {
+                id: 27,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "isian",
+                question: "Kejahatan tidak boleh dibalas dengan ____.",
+                answer: "kejahatan"
+            },
+            {
+                id: 28,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "isian",
+                question: "Nasihat membalas kejahatan dengan kebaikan diberikan oleh Rasul ____.",
+                answer: "paulus"
+            },
+            {
+                id: 29,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "isian",
+                question: "Manusia bertanggung jawab atas ____ nya.",
+                answer: "perbuatan"
+            },
+            {
+                id: 30,
+                subbab: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+                type: "isian",
+                question: "Hewan yang diperlakukan baik dan jahat pada gambar buku siswa adalah ____.",
+                answer: "kelinci"
+            }
+        ];
+
+        class ExamApp {
+            constructor() {
+                this.currentView = 'home'; // home, student_login, exam, result, teacher_dashboard
+                this.studentName = '';
+                this.studentClass = '';
+                this.shuffledQuestions = [];
+                this.currentQuestionIndex = 0;
+                this.userAnswers = {}; // questionId -> { answer, isCorrect, locked }
+                this.timeLeft = 60 * 60; // 60 minutes in seconds
+                this.timerInterval = null;
+                this.resultsData = JSON.parse(localStorage.getItem('pak_exam_results') || '[]');
+            }
+
+            init() {
+                this.render();
+            }
+
+            switchView(view) {
+                if (this.currentView === 'exam' && view !== 'exam' && view !== 'result') {
+                    if (!confirm("Apakah Anda yakin ingin keluar? Ujian akan dihentikan.")) return;
+                    clearInterval(this.timerInterval);
+                }
+                this.currentView = view;
+                this.render();
+            }
+
+            showToast(message, type = 'success') {
+                const container = document.getElementById('toastContainer');
+                const toast = document.createElement('div');
+                const bg = type === 'success' ? 'bg-emerald-500 text-white' : type === 'error' ? 'bg-rose-500 text-white' : 'bg-amber-500 text-white';
+                const icon = type === 'success' ? 'fa-check-circle' : type === 'error' ? 'fa-exclamation-circle' : 'fa-info-circle';
+                
+                toast.className = `${bg} px-4 py-3 rounded-2xl shadow-lg flex items-center gap-3 transform translate-y-2 opacity-0 transition-all duration-300 pointer-events-auto font-medium text-sm`;
+                toast.innerHTML = `<i class="fas ${icon} text-lg"></i><span>${message}</span>`;
+                
+                container.appendChild(toast);
+                setTimeout(() => {
+                    toast.classList.remove('translate-y-2', 'opacity-0');
+                }, 50);
+
+                setTimeout(() => {
+                    toast.classList.add('translate-y-2', 'opacity-0');
+                    setTimeout(() => toast.remove(), 300);
+                }, 3500);
+            }
+
+            render() {
+                const main = document.getElementById('mainContent');
+                main.innerHTML = '';
+
+                switch (this.currentView) {
+                    case 'home':
+                        main.innerHTML = this.renderHome();
+                        break;
+                    case 'student_login':
+                        main.innerHTML = this.renderStudentLogin();
+                        break;
+                    case 'exam':
+                        main.innerHTML = this.renderExamRoom();
+                        this.initExamTimer();
+                        break;
+                    case 'result':
+                        main.innerHTML = this.renderResultScreen();
+                        break;
+                    case 'teacher_dashboard':
+                        main.innerHTML = this.renderTeacherDashboard();
+                        break;
+                }
+            }
+
+            renderHome() {
+                return `
+                    <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-12 shadow-3d border-2 border-white text-center max-w-2xl mx-auto animate-float">
+                        <div class="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-amber-500 rounded-3xl mx-auto flex items-center justify-center shadow-3d text-5xl mb-6">
+                            🌟
+                        </div>
+                        <h2 class="pixar-title text-3xl md:text-4xl font-extrabold text-slate-800 mb-3">Ujian BAB 1 Pendidikan Agama Katolik</h2>
+                        <p class="text-slate-600 font-medium text-sm md:text-base mb-8">
+                            Topik: Pribadi Peserta Didik<br>
+                            <span class="text-xs text-purple-600 font-bold bg-purple-100 px-3 py-1 rounded-full inline-block mt-2">Subbab 1 & Subbab 2</span>
+                        </p>
+                        <div class="flex flex-col sm:flex-row gap-4 justify-center">
+                            <button onclick="app.switchView('student_login')" class="px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-pixar font-bold text-lg rounded-2xl shadow-3d btn-pixar flex items-center justify-center gap-3">
+                                <i class="fas fa-user-graduate"><span>Mulai Ujian Siswa</span></i>
+                            </button>
+                            <button onclick="app.openTeacherLoginModal()" class="px-8 py-4 bg-gradient-to-r from-purple-600 to-indigo-600 hover:from-purple-700 hover:to-indigo-700 text-white font-pixar font-bold text-lg rounded-2xl shadow-3d btn-pixar flex items-center justify-center gap-3">
+                                <i class="fas fa-chalkboard-teacher"><span>Dashboard Guru</span></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            renderStudentLogin() {
+                return `
+                    <div class="bg-white/90 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-3d border-2 border-white max-w-md mx-auto w-full">
+                        <div class="text-center mb-6">
+                            <div class="w-16 h-16 bg-blue-100 text-blue-600 rounded-3xl mx-auto flex items-center justify-center text-3xl shadow-inner mb-3">
+                                <i class="fas fa-user-circle"></i>
+                            </div>
+                            <h3 class="font-pixar text-2xl font-bold text-slate-800">Identitas Siswa</h3>
+                            <p class="text-xs text-slate-500 mt-1">Silakan masukkan nama lengkap dan pilih kelasmu.</p>
+                        </div>
+                        <form onsubmit="app.handleStudentLoginSubmit(event)" class="space-y-4">
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Nama Lengkap</label>
+                                <input type="text" id="inputStudentName" required placeholder="Contoh: Maria Magdalena" class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none font-medium text-slate-700">
+                            </div>
+                            <div>
+                                <label class="block text-xs font-bold text-slate-600 uppercase mb-1">Pilih Kelas</label>
+                                <div class="grid grid-cols-2 gap-3">
+                                    <label class="border-2 border-slate-200 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer hover:border-blue-500 transition font-bold text-slate-700">
+                                        <input type="radio" name="studentClass" value="3A" required class="accent-blue-600"> Kelas 3A
+                                    </label>
+                                    <label class="border-2 border-slate-200 rounded-xl p-3 flex items-center justify-center gap-2 cursor-pointer hover:border-blue-500 transition font-bold text-slate-700">
+                                        <input type="radio" name="studentClass" value="3B" required class="accent-blue-600"> Kelas 3B
+                                    </label>
+                                </div>
+                            </div>
+                            <div class="pt-4 flex gap-3">
+                                <button type="button" onclick="app.switchView('home')" class="flex-1 py-3 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition">Kembali</button>
+                                <button type="submit" class="flex-1 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-3d-sm btn-pixar">Mulai Ujian</button>
+                            </div>
+                        </form>
+                    </div>
+                `;
+            }
+
+            handleStudentLoginSubmit(e) {
+                e.preventDefault();
+                const name = document.getElementById('inputStudentName').value.trim();
+                const classRadio = document.querySelector('input[name="studentClass"]:checked');
+                
+                if (!name || !classRadio) {
+                    this.showToast("Harap isi nama dan pilih kelas!", "error");
+                    return;
+                }
+
+                this.studentName = name;
+                this.studentClass = classRadio.value;
+                this.userAnswers = {};
+                this.currentQuestionIndex = 0;
+                this.timeLeft = 60 * 60;
+
+                // Randomize Questions and Options
+                this.shuffledQuestions = questionBank.map(q => {
+                    let cloned = { ...q };
+                    if (cloned.type === 'pg' && cloned.options) {
+                        cloned.options = [...cloned.options].sort(() => Math.random() - 0.5);
+                    }
+                    return cloned;
+                }).sort(() => Math.random() - 0.5);
+
+                this.switchView('exam');
+                this.showToast(`Selamat mengerjakan, ${this.studentName}!`, "success");
+            }
+
+            initExamTimer() {
+                if (this.timerInterval) clearInterval(this.timerInterval);
+                this.timerInterval = setInterval(() => {
+                    this.timeLeft--;
+                    const timerEl = document.getElementById('timerDisplay');
+                    if (timerEl) {
+                        const m = Math.floor(this.timeLeft / 60);
+                        const s = this.timeLeft % 60;
+                        timerEl.textContent = `${m.toString().padStart(2, '0')}:${s.toString().padStart(2, '0')}`;
+                        if (this.timeLeft <= 300) {
+                            timerEl.classList.add('text-rose-600', 'animate-pulse');
+                        }
+                    }
+                    if (this.timeLeft <= 0) {
+                        clearInterval(this.timerInterval);
+                        this.showToast("Waktu ujian telah habis!", "error");
+                        this.finishExam();
+                    }
+                }, 1000);
+            }
+
+            renderExamRoom() {
+                const q = this.shuffledQuestions[this.currentQuestionIndex];
+                const totalQ = this.shuffledQuestions.length;
+                const answeredCount = Object.keys(this.userAnswers).length;
+                const isLocked = this.userAnswers[q.id] && this.userAnswers[q.id].locked;
+                const currentAnswerObj = this.userAnswers[q.id];
+
+                return `
+                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-3d border-2 border-white max-w-3xl mx-auto w-full">
+                        <!-- Exam Top Bar -->
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                            <div>
+                                <span class="text-xs font-bold px-3 py-1 bg-blue-100 text-blue-600 rounded-full">${q.subbab}</span>
+                                <h4 class="font-pixar text-lg font-bold text-slate-800 mt-1">Soal No. ${this.currentQuestionIndex + 1} dari ${totalQ}</h4>
+                            </div>
+                            <div class="flex items-center gap-4">
+                                <div class="flex items-center gap-2 bg-amber-50 px-4 py-2 rounded-2xl border border-amber-200">
+                                    <i class="fas fa-clock text-amber-500"></i>
+                                    <span id="timerDisplay" class="font-pixar font-bold text-amber-700">60:00</span>
+                                </div>
+                                <button onclick="app.finishExamConfirm()" class="px-4 py-2 bg-rose-500 hover:bg-rose-600 text-white font-bold rounded-xl text-sm shadow-sm transition">
+                                    Selesai Ujian
+                                </button>
+                            </div>
+                        </div>
+
+                        <!-- Question Box -->
+                        <div class="mb-6">
+                            <p class="text-slate-800 font-medium text-base md:text-lg mb-6 leading-relaxed">${q.question}</p>
+                            
+                            ${q.type === 'pg' ? `
+                                <div class="grid grid-cols-1 gap-3">
+                                    ${q.options.map((opt, idx) => {
+                                        const isSelected = currentAnswerObj && currentAnswerObj.answer === opt;
+                                        let btnStyle = "border-slate-200 bg-white hover:border-blue-400 text-slate-700";
+                                        if (isLocked) {
+                                            if (isSelected) {
+                                                btnStyle = currentAnswerObj.isCorrect ? "border-emerald-500 bg-emerald-50 text-emerald-800 font-bold" : "border-rose-500 bg-rose-50 text-rose-800 font-bold";
+                                            } else if (opt === q.answer) {
+                                                btnStyle = "border-emerald-400 bg-emerald-50/50 text-emerald-700 font-bold";
+                                            } else {
+                                                btnStyle = "border-slate-200 bg-slate-50 text-slate-400 opacity-60";
+                                            }
+                                        }
+                                        return `
+                                            <button onclick="app.submitAnswer(${q.id}, '${opt.replace(/'/g, "\\'")}')" ${isLocked ? 'disabled' : ''} class="w-full text-left p-4 rounded-2xl border-2 ${btnStyle} transition flex items-center justify-between font-medium">
+                                                <span class="flex items-center gap-3">
+                                                    <span class="w-8 h-8 rounded-xl bg-slate-100 flex items-center justify-center font-bold text-xs text-slate-600">${String.fromCharCode(65 + idx)}</span>
+                                                    ${opt}
+                                                </span>
+                                                ${isLocked && isSelected ? (currentAnswerObj.isCorrect ? '<i class="fas fa-check-circle text-emerald-600 text-xl"></i>' : '<i class="fas fa-times-circle text-rose-600 text-xl"></i>') : ''}
+                                            </button>
+                                        `;
+                                    }).join('')}
+                                </div>
+                            ` : `
+                                <div class="space-y-3">
+                                    <input type="text" id="isianAnswerInput" ${isLocked ? 'disabled' : ''} value="${currentAnswerObj ? currentAnswerObj.answer : ''}" placeholder="Ketik jawaban singkat di sini..." class="w-full px-4 py-3 rounded-xl border-2 border-slate-200 focus:border-blue-500 focus:outline-none font-medium text-slate-700">
+                                    ${!isLocked ? `
+                                        <button onclick="app.submitIsianAnswer(${q.id})" class="px-6 py-3 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl shadow-3d-sm btn-pixar">
+                                            Kirim Jawaban
+                                        </button>
+                                    ` : ''}
+                                </div>
+                            `}
+                        </div>
+
+                        <!-- Interactive Pixar Feedback Notification Banner if answered -->
+                        ${isLocked ? `
+                            <div class="mb-6 p-4 rounded-2xl ${currentAnswerObj.isCorrect ? 'bg-emerald-100 border-2 border-emerald-300 text-emerald-800' : 'bg-rose-100 border-2 border-rose-300 text-rose-800'} flex items-center gap-3 animate-bounce">
+                                <span class="text-3xl">${currentAnswerObj.isCorrect ? '👍' : '💪'}</span>
+                                <div>
+                                    <h5 class="font-pixar font-bold">${currentAnswerObj.isCorrect ? 'Yeah, kamu menjawab dengan benar! 👍' : 'Maaf, kamu belum berhasil, belajar lebih giat lagi ya! 💪'}</h5>
+                                    <p class="text-xs mt-0.5">${currentAnswerObj.isCorrect ? 'Hebat sekali! Pertahankan prestasimu.' : `Jawaban yang benar adalah: <strong>${q.answer}</strong>. Soal ini sudah terkunci.`}</p>
+                                </div>
+                            </div>
+                        ` : ''}
+
+                        <!-- Navigation Footer inside Exam -->
+                        <div class="flex items-center justify-between pt-4 border-t border-slate-100">
+                            <button onclick="app.prevQuestion()" ${this.currentQuestionIndex === 0 ? 'disabled opacity-50 cursor-not-allowed' : ''} class="px-5 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl transition flex items-center gap-2">
+                                <i class="fas fa-arrow-left"></i> Sebelumnya
+                            </button>
+                            <div class="text-xs font-bold text-slate-500 hidden sm:block">
+                                Terjawab: ${answeredCount} / ${totalQ}
+                            </div>
+                            <button onclick="app.nextQuestion()" ${this.currentQuestionIndex === totalQ - 1 ? 'disabled opacity-50 cursor-not-allowed' : ''} class="px-5 py-2.5 bg-blue-600 hover:bg-blue-700 text-white font-bold rounded-xl transition flex items-center gap-2">
+                                Selanjutnya <i class="fas fa-arrow-right"></i>
+                            </button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            submitAnswer(questionId, selectedOpt) {
+                const q = this.shuffledQuestions.find(item => item.id === questionId);
+                if (!q || (this.userAnswers[questionId] && this.userAnswers[questionId].locked)) return;
+
+                const isCorrect = selectedOpt.trim().toLowerCase() === q.answer.trim().toLowerCase();
+                this.userAnswers[questionId] = {
+                    questionId: q.id,
+                    question: q.question,
+                    userAnswer: selectedOpt,
+                    correctAnswer: q.answer,
+                    isCorrect: isCorrect,
+                    locked: true
+                };
+
+                if (isCorrect) {
+                    this.showToast("Yeah, kamu menjawab dengan benar! 👍", "success");
+                } else {
+                    this.showToast("Maaf, kamu belum berhasil, belajar lebih giat lagi ya! 💪", "error");
+                }
+
+                this.render();
+            }
+
+            submitIsianAnswer(questionId) {
+                const inputEl = document.getElementById('isianAnswerInput');
+                if (!inputEl) return;
+                const val = inputEl.value.trim();
+                if (!val) {
+                    this.showToast("Harap isi jawaban terlebih dahulu!", "error");
+                    return;
+                }
+
+                const q = this.shuffledQuestions.find(item => item.id === questionId);
+                const isCorrect = val.toLowerCase() === q.answer.toLowerCase();
+
+                this.userAnswers[questionId] = {
+                    questionId: q.id,
+                    question: q.question,
+                    userAnswer: val,
+                    correctAnswer: q.answer,
+                    isCorrect: isCorrect,
+                    locked: true
+                };
+
+                if (isCorrect) {
+                    this.showToast("Yeah, kamu menjawab dengan benar! 👍", "success");
+                } else {
+                    this.showToast("Maaf, kamu belum berhasil, belajar lebih giat lagi ya! 💪", "error");
+                }
+
+                this.render();
+            }
+
+            prevQuestion() {
+                if (this.currentQuestionIndex > 0) {
+                    this.currentQuestionIndex--;
+                    this.render();
+                }
+            }
+
+            nextQuestion() {
+                if (this.currentQuestionIndex < this.shuffledQuestions.length - 1) {
+                    this.currentQuestionIndex++;
+                    this.render();
+                }
+            }
+
+            finishExamConfirm() {
+                if (confirm("Apakah Anda yakin ingin menyelesaikan ujian dan melihat hasil?")) {
+                    this.finishExam();
+                }
+            }
+
+            finishExam() {
+                if (this.timerInterval) clearInterval(this.timerInterval);
+
+                let correctCount = 0;
+                let wrongCount = 0;
+                
+                this.shuffledQuestions.forEach(q => {
+                    const ans = this.userAnswers[q.id];
+                    if (ans && ans.isCorrect) {
+                        correctCount++;
+                    } else {
+                        wrongCount++;
+                    }
+                });
+
+                const score = Math.round((correctCount / this.shuffledQuestions.length) * 100);
+
+                const record = {
+                    id: Date.now(),
+                    name: this.studentName,
+                    className: this.studentClass,
+                    score: score,
+                    correctCount: correctCount,
+                    wrongCount: wrongCount,
+                    totalQuestions: this.shuffledQuestions.length,
+                    answersDetail: this.shuffledQuestions.map(q => ({
+                        question: q.question,
+                        userAnswer: this.userAnswers[q.id] ? this.userAnswers[q.id].userAnswer : "(Tidak dijawab)",
+                        correctAnswer: q.answer,
+                        isCorrect: this.userAnswers[q.id] ? this.userAnswers[q.id].isCorrect : false
+                    })),
+                    finishedAt: new Date().toLocaleString('id-ID')
+                };
+
+                this.resultsData.push(record);
+                localStorage.setItem('pak_exam_results', JSON.stringify(this.resultsData));
+
+                this.currentExamResult = record;
+                this.switchView('result');
+            }
+
+            renderResultScreen() {
+                const res = this.currentExamResult;
+                return `
+                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-10 shadow-3d border-2 border-white max-w-xl mx-auto text-center">
+                        <div class="w-24 h-24 bg-gradient-to-tr from-yellow-400 to-orange-500 rounded-3xl mx-auto flex items-center justify-center shadow-3d text-5xl mb-6 animate-float">
+                            🏆
+                        </div>
+                        <h2 class="font-pixar text-3xl font-bold text-slate-800 mb-1">Ujian Selesai!</h2>
+                        <p class="text-slate-500 font-medium mb-6">Kerja bagus, ${res.name} (${res.className})!</p>
+                        
+                        <div class="bg-slate-50 rounded-2xl p-6 border-2 border-slate-100 mb-8 grid grid-cols-3 gap-4 text-center">
+                            <div>
+                                <span class="block text-xs font-bold text-slate-400 uppercase">Nilai Akhir</span>
+                                <span class="font-pixar text-3xl font-bold text-blue-600">${res.score}</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-bold text-slate-400 uppercase">Benar</span>
+                                <span class="font-pixar text-3xl font-bold text-emerald-600">${res.correctCount}</span>
+                            </div>
+                            <div>
+                                <span class="block text-xs font-bold text-slate-400 uppercase">Salah/Kosong</span>
+                                <span class="font-pixar text-3xl font-bold text-rose-600">${res.wrongCount}</span>
+                            </div>
+                        </div>
+
+                        <div class="flex gap-4">
+                            <button onclick="app.switchView('home')" class="flex-1 py-3.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-2xl transition">Kembali ke Beranda</button>
+                            <button onclick="app.openTeacherLoginModal()" class="flex-1 py-3.5 bg-purple-600 hover:bg-purple-700 text-white font-bold rounded-2xl shadow-3d-sm btn-pixar">Menu Guru</button>
+                        </div>
+                    </div>
+                `;
+            }
+
+            openTeacherLoginModal() {
+                document.getElementById('teacherPasswordInput').value = '';
+                document.getElementById('teacherLoginModal').classList.remove('hidden');
+            }
+
+            closeTeacherLoginModal() {
+                document.getElementById('teacherLoginModal').classList.add('hidden');
+            }
+
+            verifyTeacherLogin() {
+                const pass = document.getElementById('teacherPasswordInput').value;
+                if (pass === 'Katolik29') {
+                    this.closeTeacherLoginModal();
+                    this.switchView('teacher_dashboard');
+                    this.showToast("Berhasil masuk ke Mode Guru!", "success");
+                } else {
+                    this.showToast("Password anda salah!", "error");
+                }
+            }
+
+            renderTeacherDashboard() {
+                const results = JSON.parse(localStorage.getItem('pak_exam_results') || '[]');
+                return `
+                    <div class="bg-white/95 backdrop-blur-md rounded-3xl p-6 md:p-8 shadow-3d border-2 border-white max-w-5xl mx-auto w-full">
+                        <div class="flex flex-wrap items-center justify-between gap-4 mb-6 pb-4 border-b border-slate-100">
+                            <div>
+                                <h3 class="font-pixar text-2xl font-bold text-slate-800 flex items-center gap-2">
+                                    <i class="fas fa-chalkboard-teacher text-purple-600"></i> Dashboard Guru
+                                </h3>
+                                <p class="text-xs text-slate-500 font-medium">Rekapitulasi Nilai Siswa Ujian BAB 1 PAK</p>
+                            </div>
+                            <div class="flex items-center gap-3 no-print">
+                                <button onclick="window.print()" class="px-4 py-2.5 bg-emerald-600 hover:bg-emerald-700 text-white font-bold rounded-xl text-sm shadow-3d-sm btn-pixar flex items-center gap-2">
+                                    <i class="fas fa-print"></i> Cetak Daftar Nilai
+                                </button>
+                                <button onclick="app.clearResultsData()" class="px-4 py-2.5 bg-rose-100 hover:bg-rose-200 text-rose-700 font-bold rounded-xl text-sm transition">
+                                    Reset Data
+                                </button>
+                                <button onclick="app.switchView('home')" class="px-4 py-2.5 bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold rounded-xl text-sm transition">
+                                    Logout
+                                </button>
+                            </div>
+                        </div>
+
+                        ${results.length === 0 ? `
+                            <div class="text-center py-12 text-slate-400">
+                                <i class="fas fa-folder-open text-4xl mb-3"></i>
+                                <p class="font-medium">Belum ada siswa yang menyelesaikan ujian.</p>
+                            </div>
+                        ` : `
+                            <div class="overflow-x-auto">
+                                <table class="w-full text-left border-collapse">
+                                    <thead>
+                                        <tr class="border-b-2 border-slate-100 text-xs font-bold text-slate-400 uppercase">
+                                            <th class="py-3 px-4">No</th>
+                                            <th class="py-3 px-4">Nama Siswa</th>
+                                            <th class="py-3 px-4">Kelas</th>
+                                            <th class="py-3 px-4 text-center">Nilai</th>
+                                            <th class="py-3 px-4 text-center">Benar</th>
+                                            <th class="py-3 px-4 text-center">Salah</th>
+                                            <th class="py-3 px-4">Waktu Selesai</th>
+                                            <th class="py-3 px-4 text-center no-print">Aksi</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody class="divide-y divide-slate-100 font-medium text-slate-700 text-sm">
+                                        ${results.map((r, idx) => `
+                                            <tr class="hover:bg-slate-50 transition">
+                                                <td class="py-3 px-4">${idx + 1}</td>
+                                                <td class="py-3 px-4 font-bold text-slate-800">${r.name}</td>
+                                                <td class="py-3 px-4"><span class="px-2.5 py-1 bg-purple-50 text-purple-700 rounded-lg text-xs font-bold">${r.className}</span></td>
+                                                <td class="py-3 px-4 text-center"><span class="px-3 py-1 bg-blue-100 text-blue-700 rounded-xl font-bold">${r.score}</span></td>
+                                                <td class="py-3 px-4 text-center text-emerald-600 font-bold">${r.correctCount}</td>
+                                                <td class="py-3 px-4 text-center text-rose-600 font-bold">${r.wrongCount}</td>
+                                                <td class="py-3 px-4 text-xs text-slate-500">${r.finishedAt}</td>
+                                                <td class="py-3 px-4 text-center no-print">
+                                                    <button onclick="app.viewStudentDetail(${r.id})" class="px-3 py-1.5 bg-purple-100 hover:bg-purple-200 text-purple-700 rounded-xl text-xs font-bold transition">
+                                                        Detail Jawaban
+                                                    </button>
+                                                </td>
+                                            </tr>
+                                        `).join('')}
+                                    </tbody>
+                                </table>
+                            </div>
+                        `}
+                    </div>
+                `;
+            }
+
+            viewStudentDetail(recordId) {
+                const results = JSON.parse(localStorage.getItem('pak_exam_results') || '[]');
+                const record = results.find(r => r.id === recordId);
+                if (!record) return;
+
+                document.getElementById('modalStudentName').textContent = record.name;
+                document.getElementById('modalStudentMeta').textContent = `Kelas ${record.className} • Nilai: ${record.score} • Selesai: ${record.finishedAt}`;
+                
+                const listEl = document.getElementById('modalStudentAnswersList');
+                listEl.innerHTML = record.answersDetail.map((ans, idx) => `
+                    <div class="p-3.5 rounded-2xl border-2 ${ans.isCorrect ? 'border-emerald-200 bg-emerald-50/50' : 'border-rose-200 bg-rose-50/50'} text-xs md:text-sm">
+                        <p class="font-bold text-slate-800 mb-1">Q${idx + 1}. ${ans.question}</p>
+                        <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-2 font-medium">
+                            <div>Jawaban Siswa: <span class="${ans.isCorrect ? 'text-emerald-700 font-bold' : 'text-rose-700 font-bold'}">${ans.userAnswer}</span></div>
+                            <div>Kunci Jawaban: <span class="text-emerald-700 font-bold">${ans.correctAnswer}</span></div>
+                        </div>
+                    </div>
+                `).join('');
+
+                document.getElementById('studentDetailModal').classList.remove('hidden');
+            }
+
+            closeStudentDetailModal() {
+                document.getElementById('studentDetailModal').classList.add('hidden');
+            }
+
+            clearResultsData() {
+                if (confirm("Apakah Anda yakin ingin menghapus seluruh data nilai siswa?")) {
+                    localStorage.removeItem('pak_exam_results');
+                    this.render();
+                    this.showToast("Data nilai berhasil dikosongkan.", "success");
+                }
+            }
+        }
+
+        const app = new ExamApp();
+        window.onload = () => {
+            app.init();
+        };
+    </script>
+</body>
+</html>
