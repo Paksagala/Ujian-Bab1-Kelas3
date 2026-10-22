@@ -1,0 +1,1984 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ujian BAB 1 - Pendidikan Agama Katolik SD</title>
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <!-- Google Fonts: Fredoka & Poppins -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=Poppins:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <!-- FontAwesome Icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+  
+  <style>
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: radial-gradient(circle at 20% 20%, #eff6ff 0%, #e0f2fe 50%, #fef3c7 100%);
+      min-height: 100vh;
+      color: #334155;
+    }
+    .font-fun {
+      font-family: 'Fredoka', cursive, sans-serif;
+    }
+
+    /* 3D Pixar Claymorphism Effects */
+    .pixar-card {
+      background: rgba(255, 255, 255, 0.95);
+      backdrop-filter: blur(12px);
+      border-radius: 28px;
+      box-shadow: 0 16px 32px -4px rgba(14, 116, 144, 0.12),
+                  0 8px 16px -4px rgba(0, 0, 0, 0.06),
+                  inset 0 -4px 0 rgba(0, 0, 0, 0.08),
+                  inset 0 2px 4px rgba(255, 255, 255, 0.9);
+      border: 3px solid rgba(255, 255, 255, 0.9);
+    }
+
+    .pixar-btn {
+      position: relative;
+      border-radius: 20px;
+      font-family: 'Fredoka', sans-serif;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      transition: all 0.15s cubic-bezier(0.4, 0, 0.2, 1);
+      cursor: pointer;
+      user-select: none;
+    }
+    .pixar-btn:active {
+      transform: translateY(4px);
+    }
+
+    .pixar-btn-blue {
+      background: linear-gradient(180deg, #38bdf8 0%, #0284c7 100%);
+      color: white;
+      box-shadow: 0 6px 0 #0369a1, 0 10px 16px rgba(2, 132, 199, 0.35);
+    }
+    .pixar-btn-blue:active {
+      box-shadow: 0 2px 0 #0369a1, 0 4px 8px rgba(2, 132, 199, 0.2);
+    }
+
+    .pixar-btn-green {
+      background: linear-gradient(180deg, #4ade80 0%, #16a34a 100%);
+      color: white;
+      box-shadow: 0 6px 0 #15803d, 0 10px 16px rgba(22, 163, 74, 0.35);
+    }
+    .pixar-btn-green:active {
+      box-shadow: 0 2px 0 #15803d, 0 4px 8px rgba(22, 163, 74, 0.2);
+    }
+
+    .pixar-btn-amber {
+      background: linear-gradient(180deg, #fbbf24 0%, #d97706 100%);
+      color: white;
+      box-shadow: 0 6px 0 #b45309, 0 10px 16px rgba(217, 119, 6, 0.35);
+    }
+    .pixar-btn-amber:active {
+      box-shadow: 0 2px 0 #b45309, 0 4px 8px rgba(217, 119, 6, 0.2);
+    }
+
+    .pixar-btn-purple {
+      background: linear-gradient(180deg, #c084fc 0%, #9333ea 100%);
+      color: white;
+      box-shadow: 0 6px 0 #7e22ce, 0 10px 16px rgba(147, 51, 234, 0.35);
+    }
+    .pixar-btn-purple:active {
+      box-shadow: 0 2px 0 #7e22ce, 0 4px 8px rgba(147, 51, 234, 0.2);
+    }
+
+    .pixar-btn-red {
+      background: linear-gradient(180deg, #f87171 0%, #dc2626 100%);
+      color: white;
+      box-shadow: 0 6px 0 #b91c1c, 0 10px 16px rgba(220, 38, 38, 0.35);
+    }
+    .pixar-btn-red:active {
+      box-shadow: 0 2px 0 #b91c1c, 0 4px 8px rgba(220, 38, 38, 0.2);
+    }
+
+    /* Option Item Pixar Style */
+    .option-card {
+      background: #f8fafc;
+      border: 3px solid #e2e8f0;
+      border-radius: 20px;
+      transition: all 0.2s ease;
+      box-shadow: 0 4px 0 #cbd5e1;
+      cursor: pointer;
+    }
+    .option-card:hover:not(.locked) {
+      background: #f0fdf4;
+      border-color: #86efac;
+      transform: translateY(-2px);
+      box-shadow: 0 6px 0 #4ade80;
+    }
+    .option-card.selected-correct {
+      background: #ecfdf5 !important;
+      border-color: #22c55e !important;
+      box-shadow: 0 6px 0 #15803d !important;
+      color: #15803d !important;
+    }
+    .option-card.selected-wrong {
+      background: #fef2f2 !important;
+      border-color: #ef4444 !important;
+      box-shadow: 0 6px 0 #b91c1c !important;
+      color: #b91c1c !important;
+    }
+    .option-card.locked {
+      cursor: not-allowed;
+      opacity: 0.85;
+    }
+
+    /* Animasi Pop-up */
+    @keyframes popIn {
+      0% { transform: scale(0.6) translateY(20px); opacity: 0; }
+      80% { transform: scale(1.05) translateY(-4px); }
+      100% { transform: scale(1) translateY(0); opacity: 1; }
+    }
+    .animate-pop {
+      animation: popIn 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards;
+    }
+
+    @keyframes floaty {
+      0%, 100% { transform: translateY(0px) rotate(0deg); }
+      50% { transform: translateY(-8px) rotate(2deg); }
+    }
+    .animate-float {
+      animation: floaty 4s ease-in-out infinite;
+    }
+
+    /* Question Number Pills */
+    .q-pill {
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: 700;
+      border-radius: 14px;
+      font-family: 'Fredoka', sans-serif;
+      transition: all 0.15s ease;
+      cursor: pointer;
+      box-shadow: 0 3px 0 rgba(0,0,0,0.1);
+    }
+    .q-pill.active {
+      transform: scale(1.12);
+      outline: 3px solid #0284c7;
+      outline-offset: 2px;
+    }
+    .q-pill.correct {
+      background: #22c55e;
+      color: white;
+      box-shadow: 0 3px 0 #15803d;
+    }
+    .q-pill.wrong {
+      background: #ef4444;
+      color: white;
+      box-shadow: 0 3px 0 #b91c1c;
+    }
+    .q-pill.unanswered {
+      background: #e2e8f0;
+      color: #64748b;
+      box-shadow: 0 3px 0 #cbd5e1;
+    }
+
+    /* Print Stylesheet */
+    @media print {
+      body * {
+        visibility: hidden !important;
+      }
+      #printArea, #printArea * {
+        visibility: visible !important;
+      }
+      #printArea {
+        position: absolute !important;
+        left: 0 !important;
+        top: 0 !important;
+        width: 100% !important;
+        margin: 0 !important;
+        padding: 20px !important;
+        background: white !important;
+      }
+      .no-print {
+        display: none !important;
+      }
+    }
+  </style>
+</head>
+<body class="p-3 md:p-6 flex flex-col justify-between">
+
+  <!-- ==================== HEADER APLIKASI ==================== -->
+  <header class="max-w-6xl w-full mx-auto mb-6 flex flex-wrap items-center justify-between gap-4 pixar-card p-4 sm:p-5">
+    <div class="flex items-center gap-3">
+      <div class="w-12 h-12 sm:w-14 sm:h-14 rounded-2xl bg-gradient-to-tr from-sky-400 to-indigo-500 flex items-center justify-center text-white text-2xl shadow-md animate-float">
+        ✝️
+      </div>
+      <div>
+        <h1 class="text-lg sm:text-2xl font-fun font-bold text-sky-900 tracking-tight leading-tight">
+          Ujian BAB 1 Pendidikan Agama Katolik
+        </h1>
+        <p class="text-xs sm:text-sm text-slate-500 font-medium">
+          SD Xaverius 8 Palembang • Kelas 3 Semester 1
+        </p>
+      </div>
+    </div>
+
+    <!-- Mode Badge / Quick Switch -->
+    <div class="flex items-center gap-3" id="topNavControls">
+      <div id="userBadge" class="hidden items-center gap-2 bg-sky-50 border-2 border-sky-200 px-4 py-1.5 rounded-2xl">
+        <span class="text-2xl" id="avatarIcon">👦</span>
+        <div>
+          <p class="text-[11px] text-sky-600 font-medium leading-none">Login Sebagai</p>
+          <p class="text-sm font-bold text-sky-800" id="currentUserName">-</p>
+        </div>
+      </div>
+      <button onclick="handleHeaderLogoutClick()" id="logoutBtn" class="hidden pixar-btn pixar-btn-red px-4 py-2 text-sm flex items-center gap-1.5 cursor-pointer">
+        <i class="fa-solid fa-right-from-bracket"></i> Keluar
+      </button>
+    </div>
+  </header>
+
+  <!-- ==================== MAIN CONTAINER ==================== -->
+  <main class="max-w-6xl w-full mx-auto flex-1 mb-6">
+
+    <!-- 1. VIEW: LANDING SELECTION (SISWA / GURU) -->
+    <div id="viewLanding" class="transition-all duration-300">
+      <div class="pixar-card p-6 sm:p-10 text-center max-w-3xl mx-auto my-6">
+        <div class="inline-block p-4 rounded-3xl bg-amber-100 text-amber-600 text-5xl mb-4 animate-float">
+          ✨🌟✨
+        </div>
+        <h2 class="text-2xl sm:text-4xl font-fun font-bold text-slate-800 mb-3">
+          Selamat Datang di Ujian Online Interaktif
+        </h2>
+        <p class="text-sm sm:text-base text-slate-600 mb-8 max-w-xl mx-auto">
+          Mari belajar dan mengevaluasi pemahamanmu tentang bagaimana kita bertumbuh, berkembang, serta memilih perbuatan yang baik di hadapan Tuhan!
+        </p>
+
+        <!-- Role Cards -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-6 max-w-xl mx-auto">
+          <!-- Mode Siswa Card -->
+          <div onclick="switchView('viewSiswaLogin')" class="pixar-card p-6 cursor-pointer hover:border-sky-400 hover:scale-105 transition-all text-center border-4 border-transparent">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-sky-300 to-blue-500 flex items-center justify-center text-4xl shadow-md mb-4 animate-float">
+              🎒
+            </div>
+            <h3 class="text-xl font-fun font-bold text-sky-800 mb-1">Mode Siswa</h3>
+            <p class="text-xs text-slate-500 mb-4">Mulai mengerjakan 30 butir soal ujian dengan waktu 60 menit.</p>
+            <button class="w-full pixar-btn pixar-btn-blue py-3 text-sm">
+              Masuk Siswa <i class="fa-solid fa-arrow-right ml-1"></i>
+            </button>
+          </div>
+
+          <!-- Mode Guru Card -->
+          <div onclick="switchView('viewGuruLogin')" class="pixar-card p-6 cursor-pointer hover:border-purple-400 hover:scale-105 transition-all text-center border-4 border-transparent">
+            <div class="w-20 h-20 mx-auto rounded-3xl bg-gradient-to-tr from-purple-300 to-indigo-500 flex items-center justify-center text-4xl shadow-md mb-4 animate-float" style="animation-delay: -1.5s;">
+              👩‍🏫
+            </div>
+            <h3 class="text-xl font-fun font-bold text-purple-800 mb-1">Mode Guru</h3>
+            <p class="text-xs text-slate-500 mb-4">Pantau daftar nilai murid, detail jawaban, dan cetak laporan.</p>
+            <button class="w-full pixar-btn pixar-btn-purple py-3 text-sm">
+              Masuk Guru <i class="fa-solid fa-lock ml-1"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. VIEW: SISWA LOGIN FORM -->
+    <div id="viewSiswaLogin" class="hidden transition-all duration-300">
+      <div class="pixar-card p-6 sm:p-10 max-w-lg mx-auto">
+        <div class="flex items-center gap-3 mb-6">
+          <button onclick="switchView('viewLanding')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <div>
+            <h2 class="text-2xl font-fun font-bold text-slate-800">Biodata Peserta Didik</h2>
+            <p class="text-xs text-slate-500">Isi nama lengkap dan pilih kelasmu sebelum memulai ujian</p>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">
+              <i class="fa-regular fa-user text-sky-500 mr-1"></i> Nama Lengkap Siswa
+            </label>
+            <input type="text" id="siswaNama" placeholder="Contoh: Maria Fransiska" 
+                   class="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-100 font-medium text-slate-800 transition">
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">
+              <i class="fa-solid fa-school text-sky-500 mr-1"></i> Pilih Kelas
+            </label>
+            <select id="siswaKelas" class="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-sky-500 focus:outline-none focus:ring-4 focus:ring-sky-100 font-semibold text-slate-800 bg-white transition">
+              <option value="" disabled selected>-- Pilih Kelas Anda --</option>
+              <option value="3A">Kelas 3A</option>
+              <option value="3B">Kelas 3B</option>
+            </select>
+          </div>
+
+          <!-- Info Box Petunjuk Ujian -->
+          <div class="bg-amber-50 border-2 border-amber-200 rounded-2xl p-4 text-xs text-amber-900 space-y-1.5">
+            <p class="font-bold flex items-center gap-1.5 text-amber-800">
+              <i class="fa-solid fa-circle-info"></i> Petunjuk Ujian:
+            </p>
+            <p>1. Waktu pengerjaan adalah <strong>60 menit</strong> sejak login.</p>
+            <p>2. Terdiri dari 30 soal (Pilihan Ganda & Isian Singkat).</p>
+            <p>3. Jika kamu menjawab <strong>salah</strong>, soal otomatis terkunci dan tidak bisa diubah.</p>
+            <p>4. Berdoalah sebelum mulai mengerjakan ujian!</p>
+          </div>
+
+          <button onclick="startSiswaExam()" class="w-full pixar-btn pixar-btn-green py-4 text-base flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95">
+            <span>Mulai Ujian Sekarang</span>
+            <i class="fa-solid fa-rocket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. VIEW: GURU LOGIN FORM -->
+    <div id="viewGuruLogin" class="hidden transition-all duration-300">
+      <div class="pixar-card p-6 sm:p-10 max-w-md mx-auto">
+        <div class="flex items-center gap-3 mb-6">
+          <button onclick="switchView('viewLanding')" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600 transition">
+            <i class="fa-solid fa-arrow-left"></i>
+          </button>
+          <div>
+            <h2 class="text-2xl font-fun font-bold text-slate-800">Autentikasi Guru</h2>
+            <p class="text-xs text-slate-500">Pendidikan Agama Katolik & Budi Pekerti</p>
+          </div>
+        </div>
+
+        <div class="space-y-5">
+          <div class="text-center py-2">
+            <div class="w-16 h-16 mx-auto rounded-3xl bg-purple-100 text-purple-600 flex items-center justify-center text-3xl mb-2 animate-float">
+              🔐
+            </div>
+            <p class="text-xs text-slate-500">Masukkan kata sandi guru untuk mengakses dashboard nilai</p>
+          </div>
+
+          <div>
+            <label class="block text-sm font-bold text-slate-700 mb-2">Password Guru</label>
+            <div class="relative">
+              <input type="password" id="guruPassword" placeholder="Masukkan password..." 
+                     class="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-200 focus:border-purple-500 focus:outline-none focus:ring-4 focus:ring-purple-100 font-medium text-slate-800 transition pr-12"
+                     onkeypress="if(event.key === 'Enter') checkGuruAuth()">
+              <button type="button" onclick="togglePassVisibility()" class="absolute right-4 top-1/2 -translate-y-1/2 text-slate-400 hover:text-purple-600">
+                <i class="fa-regular fa-eye" id="eyeIcon"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- Notifikasi Error Password Salah -->
+          <div id="guruPassError" class="hidden bg-rose-50 border-2 border-rose-200 text-rose-700 text-xs rounded-2xl p-3 flex items-center gap-2 animate-shake">
+            <i class="fa-solid fa-circle-exclamation text-base text-rose-500"></i>
+            <span>Password Anda salah! Silakan coba lagi.</span>
+          </div>
+
+          <button onclick="checkGuruAuth()" class="w-full pixar-btn pixar-btn-purple py-4 text-base flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95">
+            <span>Masuk Dashboard</span>
+            <i class="fa-solid fa-right-to-bracket"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. VIEW: SISWA EXAM ROOM -->
+    <div id="viewSiswaExam" class="hidden transition-all duration-300">
+      <div class="pixar-card p-5 sm:p-7 mb-6">
+        <!-- Top Toolbar: Subbab Info & Countdown Timer -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-4 border-b-2 border-slate-100 mb-5">
+          <div>
+            <span class="inline-block px-3 py-1 rounded-full text-xs font-bold bg-sky-100 text-sky-700 mb-1" id="examSubbabTag">
+              Subbab 1: Aku Bertumbuh dan Berkembang
+            </span>
+            <h2 class="text-xl sm:text-2xl font-fun font-bold text-slate-800 flex items-center gap-2">
+              <span id="examQuestionNumber">Soal No. 1</span>
+              <span id="questionTypeBadge" class="text-xs font-sans px-2.5 py-0.5 rounded-lg bg-slate-100 text-slate-600 font-semibold">Pilihan Ganda</span>
+            </h2>
+          </div>
+
+          <!-- 3D Pixar Countdown Timer & Finish Button -->
+          <div class="flex items-center gap-3">
+            <div class="flex items-center gap-2 bg-gradient-to-r from-red-50 to-amber-50 border-2 border-amber-300 px-4 py-2 rounded-2xl shadow-sm">
+              <span class="text-2xl animate-pulse">⏰</span>
+              <div>
+                <p class="text-[10px] uppercase font-bold text-slate-500 tracking-wider">Sisa Waktu</p>
+                <span id="timerDisplay" class="font-fun font-bold text-xl text-red-600 tracking-wider">60:00</span>
+              </div>
+            </div>
+            <!-- Finish Button -->
+            <button onclick="promptFinishExam()" class="pixar-btn pixar-btn-green px-4 py-2 text-sm flex items-center gap-2 cursor-pointer shadow-md hover:scale-105 active:scale-95 transition-transform">
+              <i class="fa-solid fa-flag-checkered"></i> Selesai Ujian
+            </button>
+          </div>
+        </div>
+
+        <!-- Exam Main Body (Split into Question Area + Navigation Numbers) -->
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6">
+          
+          <!-- LEFT / TOP: Soal dan Jawaban (8 Kolom) -->
+          <div class="lg:col-span-8 space-y-5">
+            <!-- Kartu Pertanyaan -->
+            <div class="bg-gradient-to-br from-white to-sky-50/50 p-5 sm:p-7 rounded-3xl border-2 border-sky-100 shadow-inner">
+              <p class="text-base sm:text-lg text-slate-800 font-medium leading-relaxed" id="questionText">
+                Memuat soal...
+              </p>
+            </div>
+
+            <!-- Area Interaksi Jawaban: Pilihan Ganda -->
+            <div id="areaMultipleChoice" class="space-y-3">
+              <!-- Render via JS -->
+            </div>
+
+            <!-- Area Interaksi Jawaban: Isian Singkat -->
+            <div id="areaFillBlank" class="hidden space-y-4">
+              <div class="bg-amber-50/70 border-2 border-amber-200/80 rounded-2xl p-4">
+                <label class="block text-sm font-bold text-amber-900 mb-2">
+                  <i class="fa-solid fa-pen-nib text-amber-600 mr-1"></i> Tuliskan Jawaban Singkatmu:
+                </label>
+                <input type="text" id="inputIsian" placeholder="Ketik kata yang tepat untuk melengkapi kalimat..." 
+                       class="w-full px-4 py-3.5 rounded-2xl border-2 border-slate-300 focus:border-amber-500 focus:outline-none focus:ring-4 focus:ring-amber-100 font-semibold text-slate-800 transition"
+                       onkeypress="if(event.key === 'Enter') submitFillBlank()">
+              </div>
+              <button id="btnSubmitIsian" onclick="submitFillBlank()" class="pixar-btn pixar-btn-amber px-6 py-3 text-sm flex items-center gap-2 cursor-pointer">
+                <span>Kirim Jawaban Isian</span>
+                <i class="fa-solid fa-check"></i>
+              </button>
+            </div>
+
+            <!-- Locked Alert Notification Box -->
+            <div id="lockNotificationBox" class="hidden bg-slate-100 border-2 border-slate-300 text-slate-600 text-xs sm:text-sm rounded-2xl p-4 items-center gap-3">
+              <div class="text-2xl">🔒</div>
+              <div>
+                <p class="font-bold text-slate-800" id="lockTitle">Soal Telah Terkunci</p>
+                <p class="text-slate-500" id="lockSubtitle">Jawaban kamu sudah tercatat dan tidak dapat diganti lagi.</p>
+              </div>
+            </div>
+
+            <!-- Prev / Next Navigation Buttons -->
+            <div class="flex items-center justify-between pt-3">
+              <button onclick="navigateQuestion(-1)" id="btnPrev" class="pixar-btn bg-slate-200 text-slate-700 px-5 py-2.5 text-sm flex items-center gap-2 disabled:opacity-40 disabled:cursor-not-allowed">
+                <i class="fa-solid fa-chevron-left"></i> Soal Sebelumnya
+              </button>
+              <button onclick="navigateQuestion(1)" id="btnNext" class="pixar-btn pixar-btn-blue px-6 py-2.5 text-sm flex items-center gap-2">
+                Soal Berikutnya <i class="fa-solid fa-chevron-right"></i>
+              </button>
+            </div>
+          </div>
+
+          <!-- RIGHT / BOTTOM: Navigasi Palet 30 Nomor (4 Kolom) -->
+          <div class="lg:col-span-4 bg-slate-50/80 border-2 border-slate-200/70 p-4 sm:p-5 rounded-3xl">
+            <div class="flex items-center justify-between mb-3">
+              <h4 class="font-fun font-bold text-slate-700 text-base">Nomor Soal (1 - 30)</h4>
+              <span class="text-xs bg-sky-100 text-sky-700 px-2.5 py-0.5 rounded-full font-bold" id="progressCounter">0 / 30 Terjawab</span>
+            </div>
+
+            <!-- Legend Info -->
+            <div class="flex flex-wrap items-center gap-2 text-[11px] font-medium text-slate-500 mb-4 pb-3 border-b border-slate-200">
+              <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-emerald-500 inline-block"></span> Benar</span>
+              <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-rose-500 inline-block"></span> Salah (Terkunci)</span>
+              <span class="inline-flex items-center gap-1"><span class="w-3 h-3 rounded-full bg-slate-300 inline-block"></span> Belum</span>
+            </div>
+
+            <!-- Grid Numbers -->
+            <div class="grid grid-cols-5 sm:grid-cols-6 lg:grid-cols-5 gap-2 max-h-[380px] overflow-y-auto p-1" id="questionPillGrid">
+              <!-- Render via JS -->
+            </div>
+
+            <div class="mt-5 pt-4 border-t border-slate-200">
+              <button onclick="promptFinishExam()" class="w-full pixar-btn pixar-btn-green py-3 text-sm flex items-center justify-center gap-2 cursor-pointer shadow-md">
+                <i class="fa-solid fa-circle-check"></i> Selesaikan Ujian Sekarang
+              </button>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. VIEW: SISWA HASIL UJIAN (NILAI 3D PIXAR) -->
+    <div id="viewResultSiswa" class="hidden transition-all duration-300">
+      <div class="pixar-card p-6 sm:p-10 max-w-xl mx-auto text-center relative overflow-hidden">
+        <!-- Confetti & Trophy 3D Pixar Header -->
+        <div class="text-7xl mb-3 animate-float" id="resultEmoji">🏆</div>
+        <h2 class="text-3xl font-fun font-bold text-slate-800 mb-1" id="resultTitle">Ujian Selesai!</h2>
+        <p class="text-slate-500 text-sm mb-6" id="resultSubtitle">Hasil evaluasi pembelajaranmu telah tersimpan rapi.</p>
+
+        <!-- Student Badge Card -->
+        <div class="bg-sky-50 border-2 border-sky-100 rounded-3xl p-4 mb-6 inline-flex flex-col items-center justify-center w-full">
+          <p class="text-xs uppercase font-bold text-sky-500 tracking-wider">Data Peserta Ujian</p>
+          <h3 class="text-xl font-bold text-sky-950 font-fun" id="resStudentName">-</h3>
+          <p class="text-xs text-sky-700 font-semibold" id="resStudentClass">Kelas -</p>
+          <p class="text-[11px] text-slate-400 mt-1" id="resStudentTime">Diselesaikan: -</p>
+        </div>
+
+        <!-- Nilai Circle 3D Highlight -->
+        <div class="w-36 h-36 mx-auto rounded-full bg-gradient-to-tr from-sky-400 via-indigo-500 to-purple-500 p-1.5 shadow-2xl mb-6 flex items-center justify-center animate-pop">
+          <div class="w-full h-full bg-white rounded-full flex flex-col items-center justify-center text-slate-800">
+            <span class="text-xs font-bold text-slate-400 uppercase tracking-widest">NILAI AKHIR</span>
+            <span class="text-4xl sm:text-5xl font-fun font-bold text-sky-600 leading-none" id="resFinalScore">0</span>
+            <span class="text-[10px] text-slate-400 font-semibold">Skala 100</span>
+          </div>
+        </div>
+
+        <!-- Stats Grid -->
+        <div class="grid grid-cols-2 gap-4 mb-8">
+          <div class="bg-emerald-50 border-2 border-emerald-200 rounded-2xl p-4">
+            <div class="text-3xl mb-1">👍</div>
+            <p class="text-xs font-bold text-emerald-700 uppercase">Jumlah Benar</p>
+            <p class="text-3xl font-fun font-bold text-emerald-600" id="resCorrectCount">0</p>
+          </div>
+          <div class="bg-rose-50 border-2 border-rose-200 rounded-2xl p-4">
+            <div class="text-3xl mb-1">💪</div>
+            <p class="text-xs font-bold text-rose-700 uppercase">Jumlah Salah</p>
+            <p class="text-3xl font-fun font-bold text-rose-600" id="resWrongCount">0</p>
+          </div>
+        </div>
+
+        <div class="flex flex-col sm:flex-row gap-3">
+          <button onclick="handleResultLogout()" class="w-full pixar-btn pixar-btn-blue py-3.5 text-base flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:scale-[1.02] active:scale-95">
+            <i class="fa-solid fa-house"></i> Keluar ke Halaman Utama
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. VIEW: GURU DASHBOARD -->
+    <div id="viewGuruDashboard" class="hidden transition-all duration-300">
+      <div class="pixar-card p-5 sm:p-7">
+        
+        <!-- Dashboard Header Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-4 pb-5 border-b-2 border-slate-100 mb-6">
+          <div class="flex items-center gap-3">
+            <div class="w-12 h-12 rounded-2xl bg-purple-100 text-purple-600 flex items-center justify-center text-2xl font-bold">
+              📊
+            </div>
+            <div>
+              <h2 class="text-xl sm:text-2xl font-fun font-bold text-purple-950">Panel Guru: Daftar Nilai Siswa</h2>
+              <p class="text-xs sm:text-sm text-slate-500">Materi BAB 1: Pribadi Peserta Didik (SD Xaverius 8 Palembang)</p>
+            </div>
+          </div>
+
+          <!-- Quick Action Buttons -->
+          <div class="flex flex-wrap items-center gap-2">
+            <button onclick="printGradeList()" class="pixar-btn pixar-btn-blue px-4 py-2.5 text-xs sm:text-sm flex items-center gap-2 cursor-pointer">
+              <i class="fa-solid fa-print"></i> Cetak Daftar Nilai
+            </button>
+            <button onclick="clearStudentResults()" class="pixar-btn bg-slate-200 hover:bg-rose-100 text-slate-700 hover:text-rose-700 px-3 py-2.5 text-xs flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-trash-can"></i> Reset Data
+            </button>
+            <button onclick="handleLogout()" class="pixar-btn pixar-btn-red px-4 py-2.5 text-xs sm:text-sm flex items-center gap-1.5 cursor-pointer">
+              <i class="fa-solid fa-right-from-bracket"></i> Keluar Guru
+            </button>
+          </div>
+        </div>
+
+        <!-- Filter & Statistik Cepat -->
+        <div class="grid grid-cols-1 sm:grid-cols-4 gap-4 mb-6">
+          <div class="pixar-card p-4 bg-sky-50/70 border-sky-200">
+            <p class="text-xs font-bold text-sky-600 uppercase">Total Peserta Selesai</p>
+            <p class="text-2xl font-fun font-bold text-sky-900" id="statTotalStudents">0</p>
+          </div>
+          <div class="pixar-card p-4 bg-emerald-50/70 border-emerald-200">
+            <p class="text-xs font-bold text-emerald-600 uppercase">Rata-rata Nilai</p>
+            <p class="text-2xl font-fun font-bold text-emerald-900" id="statAvgScore">0</p>
+          </div>
+          <div class="pixar-card p-4 bg-amber-50/70 border-amber-200">
+            <p class="text-xs font-bold text-amber-600 uppercase">Nilai Tertinggi</p>
+            <p class="text-2xl font-fun font-bold text-amber-900" id="statMaxScore">0</p>
+          </div>
+          <!-- Filter Kelas Dropdown -->
+          <div class="pixar-card p-4 bg-purple-50/70 border-purple-200 flex flex-col justify-center">
+            <label class="text-xs font-bold text-purple-700 uppercase mb-1">Filter Kelas</label>
+            <select id="filterKelasGuru" onchange="renderGuruTable()" class="bg-white border border-purple-300 rounded-xl px-2 py-1 text-xs font-semibold text-purple-900 focus:outline-none">
+              <option value="ALL">Semua Kelas (3A & 3B)</option>
+              <option value="3A">Hanya Kelas 3A</option>
+              <option value="3B">Hanya Kelas 3B</option>
+            </select>
+          </div>
+        </div>
+
+        <!-- Tabel Daftar Nilai Siswa -->
+        <div class="overflow-x-auto rounded-2xl border-2 border-slate-200 shadow-sm bg-white">
+          <table class="w-full text-left text-sm text-slate-600" id="guruTableList">
+            <thead class="bg-slate-50 text-slate-700 text-xs uppercase font-bold border-b-2 border-slate-200">
+              <tr>
+                <th class="px-4 py-3.5 text-center">No</th>
+                <th class="px-4 py-3.5">Nama Siswa</th>
+                <th class="px-4 py-3.5 text-center">Kelas</th>
+                <th class="px-4 py-3.5 text-center">Benar</th>
+                <th class="px-4 py-3.5 text-center">Salah</th>
+                <th class="px-4 py-3.5 text-center">Nilai Akhir</th>
+                <th class="px-4 py-3.5 text-center">Waktu Selesai</th>
+                <th class="px-4 py-3.5 text-center">Detail Jawaban</th>
+              </tr>
+            </thead>
+            <tbody id="guruTableBody" class="divide-y divide-slate-100 font-medium">
+              <!-- Render via JS -->
+            </tbody>
+          </table>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- 7. MODAL DETAIL JAWABAN SISWA (MODE GURU) -->
+    <div id="modalDetailJawaban" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+      <div class="pixar-card p-6 max-w-3xl w-full max-h-[85vh] flex flex-col animate-pop">
+        <div class="flex items-center justify-between pb-4 border-b border-slate-200">
+          <div>
+            <h3 class="text-xl font-fun font-bold text-slate-800" id="detailModalTitle">Detail Jawaban Siswa</h3>
+            <p class="text-xs text-slate-500" id="detailModalSubtitle">Kelas - • Nilai: -</p>
+          </div>
+          <button onclick="closeDetailModal()" class="w-9 h-9 rounded-full bg-slate-100 hover:bg-slate-200 flex items-center justify-center text-slate-600">
+            <i class="fa-solid fa-xmark text-lg"></i>
+          </button>
+        </div>
+
+        <!-- Scrollable List of 30 Questions -->
+        <div class="overflow-y-auto flex-1 py-4 space-y-3 pr-2" id="detailQuestionsList">
+          <!-- Render via JS -->
+        </div>
+
+        <div class="pt-3 border-t border-slate-200 text-right">
+          <button onclick="closeDetailModal()" class="pixar-btn bg-slate-200 text-slate-700 px-6 py-2.5 text-sm">
+            Tutup
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <!-- 8. CETAK PRINT VIEW (TERSEMBUNYI SAAT NORMAL, TERLIHAT SAAT CETAK) -->
+    <div id="printArea" class="hidden">
+      <div style="font-family: 'Times New Roman', serif; color: black; line-height: 1.4;">
+        <div style="text-align: center; border-bottom: 3px double #000; padding-bottom: 12px; margin-bottom: 20px;">
+          <h2 style="font-size: 18pt; font-weight: bold; margin: 0; text-transform: uppercase;">SD XAVERIUS 8 PALEMBANG</h2>
+          <h3 style="font-size: 14pt; font-weight: bold; margin: 4px 0;">DAFTAR NILAI UJIAN BAB 1 PENDIDIKAN AGAMA KATOLIK DAN BUDI PEKERTI</h3>
+          <p style="font-size: 11pt; margin: 2px 0;">Materi: Pribadi Peserta Didik (Subbab 1 & 2) • Tahun Pelajaran 2026/2027</p>
+        </div>
+
+        <table style="width: 100%; border-collapse: collapse; margin-bottom: 25px; font-size: 10.5pt;" border="1">
+          <thead>
+            <tr style="background-color: #f2f2f2; text-align: center; font-weight: bold; height: 32px;">
+              <th style="width: 5%;">No</th>
+              <th style="width: 35%; text-align: left; padding-left: 8px;">Nama Peserta Didik</th>
+              <th style="width: 10%;">Kelas</th>
+              <th style="width: 12%;">Jml Benar</th>
+              <th style="width: 12%;">Jml Salah</th>
+              <th style="width: 12%;">Nilai Akhir</th>
+              <th style="width: 14%;">Waktu</th>
+            </tr>
+          </thead>
+          <tbody id="printTableBody">
+            <!-- Render via JS -->
+          </tbody>
+        </table>
+
+        <div style="display: flex; justify-content: space-between; margin-top: 40px; font-size: 11pt;">
+          <div>
+            <p>Mengetahui,</p>
+            <p>Kepala SD Xaverius 8 Palembang</p>
+            <br><br><br>
+            <p style="font-weight: bold; text-decoration: underline;">( .............................................. )</p>
+          </div>
+          <div style="text-align: right;">
+            <p>Palembang, <span id="printCurrentDate"></span></p>
+            <p>Guru Pendidikan Agama Katolik</p>
+            <br><br><br>
+            <p style="font-weight: bold; text-decoration: underline;">( .............................................. )</p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </main>
+
+  <!-- ==================== MODAL KONFIRMASI PIXAR 3D ==================== -->
+  <div id="confirmModal" class="fixed inset-0 bg-slate-900/60 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div class="pixar-card p-6 sm:p-8 max-w-md w-full text-center animate-pop relative border-4 border-amber-300">
+      <div id="confirmEmoji" class="text-6xl mb-3 animate-float">🎯</div>
+      <h3 id="confirmTitle" class="text-2xl font-fun font-bold text-slate-800 mb-2">Konfirmasi Selesai Ujian</h3>
+      <p id="confirmMessage" class="text-sm text-slate-600 font-medium mb-6 leading-relaxed">
+        Apakah kamu yakin ingin menyelesaikan ujian sekarang?
+      </p>
+      <div class="flex flex-col sm:flex-row gap-3">
+        <button id="confirmCancelBtn" onclick="closeConfirmModal()" class="w-full sm:w-1/2 pixar-btn bg-slate-200 text-slate-700 py-3 text-sm font-bold">
+          Batal / Kembali
+        </button>
+        <button id="confirmActionBtn" class="w-full sm:w-1/2 pixar-btn pixar-btn-green py-3 text-sm font-bold flex items-center justify-center gap-1.5">
+          Ya, Selesai! ✨
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ==================== POPUP FEEDBACK CERIA (BENAR / SALAH) ==================== -->
+  <div id="feedbackPopup" class="fixed inset-0 bg-slate-900/50 backdrop-blur-sm z-50 hidden flex items-center justify-center p-4">
+    <div id="feedbackContentBox" class="pixar-card p-7 max-w-sm w-full text-center animate-pop relative">
+      <div id="feedbackEmoji" class="text-6xl mb-3">👍</div>
+      <h3 id="feedbackTitle" class="text-2xl font-fun font-bold mb-2">Hebat!</h3>
+      <p id="feedbackText" class="text-sm font-medium mb-6 leading-relaxed">
+        Pesan feedback disini.
+      </p>
+      <button onclick="closeFeedbackPopup()" class="w-full pixar-btn py-3 text-sm font-bold" id="feedbackActionBtn">
+        Lanjut Belajar ✨
+      </button>
+    </div>
+  </div>
+
+  <!-- ==================== JAVASCRIPT LOGIC ==================== -->
+  <script>
+    /* ========================================================
+       1. DATA BANK SOAL ASLI DARI DOKUMEN (30 NOMOR)
+       ======================================================== */
+    const MASTER_QUESTIONS = [
+      // --- SUBBAB 1: AKU BERTUMBUH DAN BERKEMBANG ---
+      // I. Pilihan Ganda (1 - 10)
+      {
+        id: 1,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Tuhan memberi manusia anugerah untuk …",
+        options: [
+          { text: "bertumbuh dan berkembang", key: "A" },
+          { text: "menjadi kecil terus", key: "B" },
+          { text: "tidak berubah", key: "C" },
+          { text: "berhenti belajar", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      {
+        id: 2,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Waktu masih bayi, kita belum bisa …",
+        options: [
+          { text: "berlari kencang", key: "A" },
+          { text: "menulis surat", key: "B" },
+          { text: "membaca buku", key: "C" },
+          { text: "berjalan sendiri", key: "D" }
+        ],
+        correctAnswer: "D"
+      },
+      {
+        id: 3,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Bertumbuh artinya badan kita menjadi …",
+        options: [
+          { text: "lebih kecil", key: "A" },
+          { text: "tetap sama", key: "B" },
+          { text: "lebih tinggi dan lebih besar", key: "C" },
+          { text: "hilang", key: "D" }
+        ],
+        correctAnswer: "C"
+      },
+      {
+        id: 4,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Dulu belum bisa membaca, sekarang sudah bisa membaca. Ini disebut …",
+        options: [
+          { text: "tidak ada perubahan", key: "A" },
+          { text: "perkembangan kemampuan", key: "B" },
+          { text: "kemunduran", key: "C" },
+          { text: "kebetulan", key: "D" }
+        ],
+        correctAnswer: "B"
+      },
+      {
+        id: 5,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Kemampuan tumbuh dan berkembang adalah …",
+        options: [
+          { text: "anugerah Tuhan", key: "A" },
+          { text: "hukuman", key: "B" },
+          { text: "mainan", key: "C" },
+          { text: "barang belian", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      {
+        id: 6,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Sikap yang benar terhadap kemampuan dari Tuhan adalah …",
+        options: [
+          { text: "menyia-nyiakannya", key: "A" },
+          { text: "menyembunyikannya", key: "B" },
+          { text: "tidak peduli", key: "C" },
+          { text: "mengembangkannya dengan tanggung jawab", key: "D" }
+        ],
+        correctAnswer: "D"
+      },
+      {
+        id: 7,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Kita mengucap doa syukur atas pertumbuhan diri kepada …",
+        options: [
+          { text: "benda mati", key: "A" },
+          { text: "bayangan", key: "B" },
+          { text: "Tuhan", key: "C" },
+          { text: "hewan", key: "D" }
+        ],
+        correctAnswer: "C"
+      },
+      {
+        id: 8,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Perbedaan keadaan diri sebelum sekolah dan sekarang adalah …",
+        options: [
+          { text: "dulu sama persis dengan sekarang", key: "A" },
+          { text: "dulu belum bisa menulis, sekarang sudah bisa", key: "B" },
+          { text: "dulu lebih pandai", key: "C" },
+          { text: "tidak ada beda", key: "D" }
+        ],
+        correctAnswer: "B"
+      },
+      {
+        id: 9,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Cara bersyukur atas pertumbuhan dan perkembangan diri adalah …",
+        options: [
+          { text: "berdoa dan rajin belajar", key: "A" },
+          { text: "bermalas-malasan", key: "B" },
+          { text: "mengeluh", key: "C" },
+          { text: "marah-marah", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      {
+        id: 10,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "multiple",
+        question: "Di sekolah, guru membantu kita untuk …",
+        options: [
+          { text: "berhenti tumbuh", key: "A" },
+          { text: "menjadi malas", key: "B" },
+          { text: "melupakan Tuhan", key: "C" },
+          { text: "belajar dan berkembang", key: "D" }
+        ],
+        correctAnswer: "D"
+      },
+      // II. Isian Singkat (11 - 15)
+      {
+        id: 11,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "fill",
+        question: "Kemampuan tumbuh dan berkembang adalah ____ dari Tuhan.",
+        correctKeywords: ["anugerah", "kurnia", "pemberian", "rahmat"],
+        displayAnswer: "anugerah"
+      },
+      {
+        id: 12,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "fill",
+        question: "Doa untuk berterima kasih kepada Tuhan disebut doa ____.",
+        correctKeywords: ["syukur", "terima kasih"],
+        displayAnswer: "syukur"
+      },
+      {
+        id: 13,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "fill",
+        question: "Anak yang baru lahir disebut ____.",
+        correctKeywords: ["bayi", "orok"],
+        displayAnswer: "bayi"
+      },
+      {
+        id: 14,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "fill",
+        question: "Bertambahnya tinggi dan berat badan disebut ____.",
+        correctKeywords: ["bertumbuh", "pertumbuhan", "tumbuh"],
+        displayAnswer: "bertumbuh"
+      },
+      {
+        id: 15,
+        subbab: 1,
+        subbabTitle: "Subbab 1: Aku Bertumbuh dan Berkembang",
+        type: "fill",
+        question: "Sebelum bersekolah, kita belum bisa ____ dan menulis.",
+        correctKeywords: ["membaca", "baca"],
+        displayAnswer: "membaca"
+      },
+
+      // --- SUBBAB 2: SAYA MAMPU MEMBEDAKAN PERBUATAN BAIK DAN BURUK ---
+      // I. Pilihan Ganda (16 - 25)
+      {
+        id: 16,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Memberi makan kelinci dengan sayang adalah perbuatan …",
+        options: [
+          { text: "buruk", key: "A" },
+          { text: "baik", key: "B" },
+          { text: "jahat", key: "C" },
+          { text: "tidak berguna", key: "D" }
+        ],
+        correctAnswer: "B"
+      },
+      {
+        id: 17,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Memukul atau menyakiti hewan adalah perbuatan …",
+        options: [
+          { text: "buruk", key: "A" },
+          { text: "baik", key: "B" },
+          { text: "terpuji", key: "C" },
+          { text: "menyenangkan hewan", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      {
+        id: 18,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Perbuatan baik menimbulkan …",
+        options: [
+          { text: "penderitaan", key: "A" },
+          { text: "kebencian", key: "B" },
+          { text: "permusuhan", key: "C" },
+          { text: "kegembiraan dan damai sejahtera", key: "D" }
+        ],
+        correctAnswer: "D"
+      },
+      {
+        id: 19,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Perbuatan buruk atau jahat menimbulkan …",
+        options: [
+          { text: "damai sejahtera", key: "A" },
+          { text: "kegembiraan", key: "B" },
+          { text: "penderitaan dan kebencian", key: "C" },
+          { text: "pujian", key: "D" }
+        ],
+        correctAnswer: "C"
+      },
+      {
+        id: 20,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Nasihat Rasul Paulus adalah …",
+        options: [
+          { text: "balaslah kejahatan dengan kejahatan", key: "A" },
+          { text: "kalahkanlah kejahatan dengan kebaikan", key: "B" },
+          { text: "jauhilah semua orang", key: "C" },
+          { text: "diam saja saat marah", key: "D" }
+        ],
+        correctAnswer: "B"
+      },
+      {
+        id: 21,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Temanmu berbuat jahat kepadamu. Sebaiknya kamu …",
+        options: [
+          { text: "tetap berbuat baik kepadanya", key: "A" },
+          { text: "membalas dengan jahat", key: "B" },
+          { text: "memusuhinya", key: "C" },
+          { text: "mengejeknya", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      {
+        id: 22,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Setiap perbuatan baik akan mendapat …",
+        options: [
+          { text: "hukuman", key: "A" },
+          { text: "kebencian", key: "B" },
+          { text: "denda", key: "C" },
+          { text: "pujian atau penghargaan", key: "D" }
+        ],
+        correctAnswer: "D"
+      },
+      {
+        id: 23,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Salah satu bentuk hukuman bagi perbuatan buruk adalah …",
+        options: [
+          { text: "diberi hadiah", key: "A" },
+          { text: "dipuji", key: "B" },
+          { text: "dikucilkan dari masyarakat", key: "C" },
+          { text: "diberi permen", key: "D" }
+        ],
+        correctAnswer: "C"
+      },
+      {
+        id: 24,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Menolong teman yang terjatuh adalah perbuatan …",
+        options: [
+          { text: "buruk", key: "A" },
+          { text: "baik", key: "B" },
+          { text: "jahat", key: "C" },
+          { text: "tidak penting", key: "D" }
+        ],
+        correctAnswer: "B"
+      },
+      {
+        id: 25,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "multiple",
+        question: "Tuhan memberi kita kemampuan untuk …",
+        options: [
+          { text: "melakukan yang baik dan menolak yang jahat", key: "A" },
+          { text: "berbuat jahat", key: "B" },
+          { text: "membalas dendam", key: "C" },
+          { text: "malas berbuat baik", key: "D" }
+        ],
+        correctAnswer: "A"
+      },
+      // II. Isian Singkat (26 - 30)
+      {
+        id: 26,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "fill",
+        question: "Perbuatan manusia ada yang baik dan ada yang ____ atau jahat.",
+        correctKeywords: ["buruk", "jelek", "jahat"],
+        displayAnswer: "buruk"
+      },
+      {
+        id: 27,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "fill",
+        question: "Kejahatan tidak boleh dibalas dengan ____.",
+        correctKeywords: ["kejahatan", "jahat"],
+        displayAnswer: "kejahatan"
+      },
+      {
+        id: 28,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "fill",
+        question: "Nasihat membalas kejahatan dengan kebaikan diberikan oleh Rasul ____.",
+        correctKeywords: ["paulus", "santo paulus", "st paulus"],
+        displayAnswer: "Paulus"
+      },
+      {
+        id: 29,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "fill",
+        question: "Manusia bertanggung jawab atas ____ nya.",
+        correctKeywords: ["perbuatan", "perbuatannya", "tindakan", "tindakannya"],
+        displayAnswer: "perbuatan"
+      },
+      {
+        id: 30,
+        subbab: 2,
+        subbabTitle: "Subbab 2: Saya Mampu Membedakan Perbuatan Baik dan Buruk",
+        type: "fill",
+        question: "Hewan yang diperlakukan baik dan jahat pada gambar buku siswa adalah ____.",
+        correctKeywords: ["kelinci", "seekor kelinci"],
+        displayAnswer: "kelinci"
+      }
+    ];
+
+    /* ========================================================
+       2. VARIABEL STATE APLIKASI
+       ======================================================== */
+    const GURU_SECRET_PASS = "Katolik29";
+    const STORAGE_KEY = "exam_pak_results_sd_xav8";
+
+    let currentRole = null; // 'siswa' | 'guru' | null
+    let currentUser = null; // { name, kelas, startTime }
+    let currentQuestionIndex = 0;
+    let questionsState = []; // clone dari MASTER_QUESTIONS + randomize options + status jawaban
+    let examDurationSeconds = 60 * 60; // 60 menit
+    let remainingSeconds = examDurationSeconds;
+    let timerInterval = null;
+
+    /* ========================================================
+       3. FUNGSI NAVIGASI VIEW & TAMPILAN
+       ======================================================== */
+    function switchView(viewId) {
+      const views = [
+        'viewLanding', 'viewSiswaLogin', 'viewGuruLogin', 
+        'viewSiswaExam', 'viewResultSiswa', 'viewGuruDashboard'
+      ];
+      views.forEach(id => {
+        const el = document.getElementById(id);
+        if (el) el.classList.add('hidden');
+      });
+
+      const activeEl = document.getElementById(viewId);
+      if (activeEl) {
+        activeEl.classList.remove('hidden');
+      }
+
+      // Update Header Controls
+      const userBadge = document.getElementById('userBadge');
+      const logoutBtn = document.getElementById('logoutBtn');
+      const currentUserName = document.getElementById('currentUserName');
+      const avatarIcon = document.getElementById('avatarIcon');
+
+      if (currentRole === 'siswa' && currentUser) {
+        userBadge.classList.remove('hidden');
+        userBadge.classList.add('flex');
+        logoutBtn.classList.remove('hidden');
+        currentUserName.textContent = `${currentUser.name} (${currentUser.kelas})`;
+        avatarIcon.textContent = "👦";
+      } else if (currentRole === 'guru') {
+        userBadge.classList.remove('hidden');
+        userBadge.classList.add('flex');
+        logoutBtn.classList.remove('hidden');
+        currentUserName.textContent = "Ibu/Bapak Guru (Admin)";
+        avatarIcon.textContent = "👩‍🏫";
+      } else {
+        userBadge.classList.add('hidden');
+        userBadge.classList.remove('flex');
+        logoutBtn.classList.add('hidden');
+      }
+    }
+
+    /* ========================================================
+       4. AUTENTIKASI SISWA & GURU
+       ======================================================== */
+    function startSiswaExam() {
+      const nama = document.getElementById('siswaNama').value.trim();
+      const kelas = document.getElementById('siswaKelas').value;
+
+      if (!nama) {
+        showFeedbackPopup({
+          emoji: '✍️',
+          title: 'Nama Belum Diisi',
+          text: 'Silakan tulis nama lengkapmu terlebih dahulu ya!',
+          btnText: 'Mengerti',
+          isCorrect: false
+        });
+        return;
+      }
+      if (!kelas) {
+        showFeedbackPopup({
+          emoji: '🏫',
+          title: 'Kelas Belum Dipilih',
+          text: 'Silakan pilih antaran Kelas 3A atau Kelas 3B!',
+          btnText: 'Mengerti',
+          isCorrect: false
+        });
+        return;
+      }
+
+      // Set user
+      currentRole = 'siswa';
+      currentUser = {
+        name: nama,
+        kelas: kelas,
+        startTime: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit' })
+      };
+
+      // Siapkan dan Acak Soal
+      prepareQuestionsForExam();
+
+      // Mulai Timer 60 Menit
+      startExamTimer();
+
+      // Beralih ke Ruang Ujian
+      currentQuestionIndex = 0;
+      switchView('viewSiswaExam');
+      renderCurrentQuestion();
+      renderQuestionPills();
+    }
+
+    function checkGuruAuth() {
+      const passInput = document.getElementById('guruPassword');
+      const errorBox = document.getElementById('guruPassError');
+      const pass = passInput.value;
+
+      if (pass === GURU_SECRET_PASS) {
+        errorBox.classList.add('hidden');
+        passInput.value = '';
+        currentRole = 'guru';
+        switchView('viewGuruDashboard');
+        renderGuruTable();
+      } else {
+        errorBox.classList.remove('hidden');
+        passInput.focus();
+      }
+    }
+
+    function togglePassVisibility() {
+      const input = document.getElementById('guruPassword');
+      const icon = document.getElementById('eyeIcon');
+      if (input.type === 'password') {
+        input.type = 'text';
+        icon.classList.replace('fa-eye', 'fa-eye-slash');
+      } else {
+        input.type = 'password';
+        icon.classList.replace('fa-eye-slash', 'fa-eye');
+      }
+    }
+
+    /* ========================================================
+       MODAL KONFIRMASI & LOGOUT KHUSUS
+       ======================================================== */
+    function showConfirmDialog({ emoji, title, message, confirmText, confirmClass, onConfirm }) {
+      const modal = document.getElementById('confirmModal');
+      document.getElementById('confirmEmoji').textContent = emoji || '❓';
+      document.getElementById('confirmTitle').textContent = title || 'Konfirmasi';
+      document.getElementById('confirmMessage').innerHTML = message || 'Lanjutkan aksi ini?';
+      
+      const actionBtn = document.getElementById('confirmActionBtn');
+      actionBtn.textContent = confirmText || 'Ya, Lanjutkan';
+      actionBtn.className = `w-full sm:w-1/2 pixar-btn ${confirmClass || 'pixar-btn-green'} py-3 text-sm font-bold flex items-center justify-center gap-1.5`;
+      
+      actionBtn.onclick = () => {
+        closeConfirmModal();
+        if (typeof onConfirm === 'function') onConfirm();
+      };
+      
+      modal.classList.remove('hidden');
+    }
+
+    function closeConfirmModal() {
+      document.getElementById('confirmModal').classList.add('hidden');
+    }
+
+    function handleHeaderLogoutClick() {
+      if (currentRole === 'siswa' && timerInterval) {
+        // Sedang mengerjakan soal ujian
+        showConfirmDialog({
+          emoji: '🚪',
+          title: 'Keluar Saat Ujian Berjalan?',
+          message: 'Waktu ujianmu masih berjalan. Jika kamu keluar sekarang, ujian akan langsung dinilai dan disimpan ke daftar nilai guru.',
+          confirmText: 'Kirim Nilai & Keluar',
+          confirmClass: 'pixar-btn-red',
+          onConfirm: () => {
+            finishExam(false);
+          }
+        });
+      } else if (currentRole === 'guru') {
+        // Logout Guru
+        showConfirmDialog({
+          emoji: '👋',
+          title: 'Keluar Mode Guru?',
+          message: 'Anda akan keluar dari panel daftar nilai dan kembali ke menu utama.',
+          confirmText: 'Ya, Keluar',
+          confirmClass: 'pixar-btn-purple',
+          onConfirm: () => {
+            currentRole = null;
+            currentUser = null;
+            switchView('viewLanding');
+          }
+        });
+      } else {
+        resetAppToLanding();
+      }
+    }
+
+    function handleResultLogout() {
+      resetAppToLanding();
+    }
+
+    function resetAppToLanding() {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+      currentRole = null;
+      currentUser = null;
+      currentQuestionIndex = 0;
+      questionsState = [];
+      
+      // Reset input form siswa
+      const inputNama = document.getElementById('siswaNama');
+      const selectKelas = document.getElementById('siswaKelas');
+      if (inputNama) inputNama.value = '';
+      if (selectKelas) selectKelas.value = '';
+
+      switchView('viewLanding');
+    }
+
+    function handleLogout() {
+      handleHeaderLogoutClick();
+    }
+
+    /* ========================================================
+       5. SISTEM UJIAN (TIMER, ACAK JAWABAN, LOCK JAWABAN)
+       ======================================================== */
+    function prepareQuestionsForExam() {
+      questionsState = MASTER_QUESTIONS.map(q => {
+        let cloned = JSON.parse(JSON.stringify(q));
+        // Jika multiple choice, acak opsi urutan (Fisher-Yates)
+        if (cloned.type === "multiple" && cloned.options) {
+          cloned.options = shuffleArray(cloned.options);
+        }
+        cloned.userAnswer = null;     // Jawaban siswa
+        cloned.isCorrect = null;      // true | false | null
+        cloned.isLocked = false;      // otomatis terkunci bila dijawab salah
+        return cloned;
+      });
+    }
+
+    function shuffleArray(arr) {
+      const array = [...arr];
+      for (let i = array.length - 1; i > 0; i--) {
+        const j = Math.floor(Math.random() * (i + 1));
+        [array[i], array[j]] = [array[j], array[i]];
+      }
+      return array;
+    }
+
+    function startExamTimer() {
+      remainingSeconds = examDurationSeconds;
+      updateTimerDisplay();
+
+      if (timerInterval) clearInterval(timerInterval);
+      timerInterval = setInterval(() => {
+        remainingSeconds--;
+        updateTimerDisplay();
+
+        if (remainingSeconds <= 0) {
+          clearInterval(timerInterval);
+          timerInterval = null;
+          showFeedbackPopup({
+            emoji: '⏰',
+            title: 'Waktu Ujian Habis!',
+            text: 'Waktu 60 menit telah selesai. Jawabanmu otomatis terkumpul dan dinilai.',
+            btnText: 'Lihat Nilai',
+            isCorrect: false
+          });
+          finishExam(true);
+        }
+      }, 1000);
+    }
+
+    function updateTimerDisplay() {
+      const minutes = Math.floor(remainingSeconds / 60);
+      const seconds = remainingSeconds % 60;
+      const displayStr = `${String(minutes).padStart(2, '0')}:${String(seconds).padStart(2, '0')}`;
+      const el = document.getElementById('timerDisplay');
+      if (el) el.textContent = displayStr;
+    }
+
+    /* ========================================================
+       6. RENDER SOAL & JAWABAN INTERAKTIF
+       ======================================================== */
+    function renderCurrentQuestion() {
+      const q = questionsState[currentQuestionIndex];
+      if (!q) return;
+
+      // Update Subbab & Info
+      document.getElementById('examSubbabTag').textContent = q.subbabTitle;
+      document.getElementById('examQuestionNumber').textContent = `Soal No. ${q.id}`;
+      document.getElementById('questionTypeBadge').textContent = q.type === 'multiple' ? 'Pilihan Ganda' : 'Isian Singkat';
+      document.getElementById('questionText').textContent = q.question;
+
+      // Area containers
+      const mcArea = document.getElementById('areaMultipleChoice');
+      const fbArea = document.getElementById('areaFillBlank');
+      const lockBox = document.getElementById('lockNotificationBox');
+      const lockTitle = document.getElementById('lockTitle');
+      const lockSubtitle = document.getElementById('lockSubtitle');
+
+      mcArea.innerHTML = '';
+      document.getElementById('inputIsian').value = '';
+
+      if (q.type === 'multiple') {
+        mcArea.classList.remove('hidden');
+        fbArea.classList.add('hidden');
+
+        // Render Opsi A, B, C, D
+        const labels = ['A', 'B', 'C', 'D'];
+        q.options.forEach((opt, idx) => {
+          const optCard = document.createElement('div');
+          optCard.className = `option-card p-4 flex items-center gap-3.5`;
+          
+          let statusClass = "";
+          let iconHtml = `<span class="w-8 h-8 rounded-xl bg-white border-2 border-slate-300 flex items-center justify-center font-bold text-slate-700 text-sm shadow-sm">${labels[idx]}</span>`;
+
+          if (q.isLocked) {
+            optCard.classList.add('locked');
+            if (q.userAnswer === opt.key) {
+              if (q.isCorrect) {
+                optCard.classList.add('selected-correct');
+                iconHtml = `<span class="w-8 h-8 rounded-xl bg-emerald-500 text-white flex items-center justify-center font-bold text-sm shadow-sm"><i class="fa-solid fa-check"></i></span>`;
+              } else {
+                optCard.classList.add('selected-wrong');
+                iconHtml = `<span class="w-8 h-8 rounded-xl bg-rose-500 text-white flex items-center justify-center font-bold text-sm shadow-sm"><i class="fa-solid fa-xmark"></i></span>`;
+              }
+            }
+          }
+
+          optCard.innerHTML = `
+            ${iconHtml}
+            <span class="text-sm sm:text-base font-medium flex-1">${opt.text}</span>
+          `;
+
+          if (!q.isLocked) {
+            optCard.onclick = () => selectMultipleOption(opt.key, opt.text);
+          }
+
+          mcArea.appendChild(optCard);
+        });
+
+      } else {
+        // Isian Singkat
+        mcArea.classList.add('hidden');
+        fbArea.classList.remove('hidden');
+
+        const inputIsian = document.getElementById('inputIsian');
+        const btnSubmit = document.getElementById('btnSubmitIsian');
+
+        if (q.isLocked) {
+          inputIsian.value = q.userAnswer || '';
+          inputIsian.disabled = true;
+          inputIsian.classList.add('bg-slate-100', 'cursor-not-allowed');
+          btnSubmit.classList.add('hidden');
+        } else {
+          inputIsian.disabled = false;
+          inputIsian.classList.remove('bg-slate-100', 'cursor-not-allowed');
+          btnSubmit.classList.remove('hidden');
+          setTimeout(() => inputIsian.focus(), 100);
+        }
+      }
+
+      // Lock Notification status box
+      if (q.isLocked) {
+        lockBox.classList.remove('hidden');
+        lockBox.classList.add('flex');
+        if (q.isCorrect) {
+          lockTitle.textContent = "Jawaban Benar! (Tersimpan)";
+          lockSubtitle.textContent = `Kamu menjawab dengan tepat. Jawabanmu: "${q.userAnswer}"`;
+          lockBox.className = "bg-emerald-50 border-2 border-emerald-300 text-emerald-800 text-xs sm:text-sm rounded-2xl p-4 flex items-center gap-3";
+        } else {
+          lockTitle.textContent = "Soal Terkunci Karena Jawaban Belum Tepat";
+          lockSubtitle.textContent = `Jawaban kamu sebelumnya: "${q.userAnswer}". Soal ini otomatis terkunci.`;
+          lockBox.className = "bg-rose-50 border-2 border-rose-300 text-rose-800 text-xs sm:text-sm rounded-2xl p-4 flex items-center gap-3";
+        }
+      } else {
+        lockBox.classList.add('hidden');
+        lockBox.classList.remove('flex');
+      }
+
+      // Update Nav Buttons
+      document.getElementById('btnPrev').disabled = (currentQuestionIndex === 0);
+      document.getElementById('btnNext').textContent = (currentQuestionIndex === questionsState.length - 1) ? 'Ke Awal 🔄' : 'Soal Berikutnya ➡️';
+
+      // Update pills
+      renderQuestionPills();
+    }
+
+    function renderQuestionPills() {
+      const grid = document.getElementById('questionPillGrid');
+      grid.innerHTML = '';
+
+      let answeredCount = 0;
+
+      questionsState.forEach((q, idx) => {
+        const pill = document.createElement('div');
+        pill.className = 'q-pill';
+        pill.textContent = q.id;
+
+        if (idx === currentQuestionIndex) {
+          pill.classList.add('active');
+        }
+
+        if (q.isLocked) {
+          answeredCount++;
+          if (q.isCorrect) {
+            pill.classList.add('correct');
+          } else {
+            pill.classList.add('wrong');
+          }
+        } else {
+          pill.classList.add('unanswered');
+        }
+
+        pill.onclick = () => {
+          currentQuestionIndex = idx;
+          renderCurrentQuestion();
+        };
+
+        grid.appendChild(pill);
+      });
+
+      document.getElementById('progressCounter').textContent = `${answeredCount} / 30 Terjawab`;
+    }
+
+    function navigateQuestion(step) {
+      let nextIndex = currentQuestionIndex + step;
+      if (nextIndex < 0) nextIndex = 0;
+      if (nextIndex >= questionsState.length) nextIndex = 0; // Wrap around
+      currentQuestionIndex = nextIndex;
+      renderCurrentQuestion();
+    }
+
+    /* ========================================================
+       7. PEMERIKSAAN JAWABAN (BENAR / SALAH + NOTIFIKASI KHUSUS)
+       ======================================================== */
+    function selectMultipleOption(chosenKey, optionText) {
+      const q = questionsState[currentQuestionIndex];
+      if (q.isLocked) return;
+
+      const isCorrect = (chosenKey === q.correctAnswer);
+      q.userAnswer = chosenKey;
+      q.isCorrect = isCorrect;
+      q.isLocked = true; // Langsung dikunci jika salah, atau sudah dijawab
+
+      if (isCorrect) {
+        showFeedbackPopup({
+          emoji: '👍',
+          title: 'Yeah, kamu menjawab dengan benar!',
+          text: `Pilihanmu tepat sekali! Tuhan senang melihat anak yang tekun belajar.`,
+          btnText: 'Lanjutkan Soal Berikutnya ✨',
+          isCorrect: true
+        });
+      } else {
+        showFeedbackPopup({
+          emoji: '💪',
+          title: 'Maaf, kamu belum berhasil',
+          text: `Belajar lebih giat lagi ya! Soal ini sekarang terkunci. Tetap semangat!`,
+          btnText: 'Tetap Semangat & Lanjut ✨',
+          isCorrect: false
+        });
+      }
+
+      renderCurrentQuestion();
+      renderQuestionPills();
+    }
+
+    function submitFillBlank() {
+      const q = questionsState[currentQuestionIndex];
+      if (q.isLocked) return;
+
+      const inputVal = document.getElementById('inputIsian').value.trim();
+      if (!inputVal) {
+        showFeedbackPopup({
+          emoji: '✍️',
+          title: 'Isian Masih Kosong',
+          text: 'Tuliskan kata jawabanmu pada kolom yang disediakan sebelum mengirim!',
+          btnText: 'Baik, Saya Isi Dulu',
+          isCorrect: false
+        });
+        return;
+      }
+
+      // Cek kecocokan jawaban dengan kata kunci toleran huruf kapital
+      const cleanInput = inputVal.toLowerCase().replace(/[^a-z0-9]/g, '');
+      const matched = q.correctKeywords.some(keyword => {
+        const cleanKey = keyword.toLowerCase().replace(/[^a-z0-9]/g, '');
+        return cleanInput === cleanKey;
+      });
+
+      q.userAnswer = inputVal;
+      q.isCorrect = matched;
+      q.isLocked = true;
+
+      if (matched) {
+        showFeedbackPopup({
+          emoji: '👍',
+          title: 'Yeah, kamu menjawab dengan benar!',
+          text: `Hebat sekali! Jawaban isianmu tepat sesuai materi pelajaran.`,
+          btnText: 'Lanjutkan Soal Berikutnya ✨',
+          isCorrect: true
+        });
+      } else {
+        showFeedbackPopup({
+          emoji: '💪',
+          title: 'Maaf, kamu belum berhasil',
+          text: `Belajar lebih giat lagi ya! Soal ini sekarang terkunci. Tetap semangat terus!`,
+          btnText: 'Tetap Semangat & Lanjut ✨',
+          isCorrect: false
+        });
+      }
+
+      renderCurrentQuestion();
+      renderQuestionPills();
+    }
+
+    /* Pop-up Feedback Ceria */
+    function showFeedbackPopup({ emoji, title, text, btnText, isCorrect }) {
+      const popup = document.getElementById('feedbackPopup');
+      const box = document.getElementById('feedbackContentBox');
+      const btn = document.getElementById('feedbackActionBtn');
+
+      document.getElementById('feedbackEmoji').textContent = emoji;
+      document.getElementById('feedbackTitle').textContent = title;
+      document.getElementById('feedbackText').textContent = text;
+      btn.textContent = btnText || 'Lanjut';
+
+      if (isCorrect) {
+        box.classList.remove('border-rose-400');
+        box.classList.add('border-emerald-400');
+        document.getElementById('feedbackTitle').className = "text-2xl font-fun font-bold text-emerald-600 mb-2";
+        btn.className = "w-full pixar-btn pixar-btn-green py-3 text-sm font-bold";
+      } else {
+        box.classList.remove('border-emerald-400');
+        box.classList.add('border-rose-400');
+        document.getElementById('feedbackTitle').className = "text-2xl font-fun font-bold text-rose-600 mb-2";
+        btn.className = "w-full pixar-btn pixar-btn-amber py-3 text-sm font-bold";
+      }
+
+      popup.classList.remove('hidden');
+    }
+
+    function closeFeedbackPopup() {
+      document.getElementById('feedbackPopup').classList.add('hidden');
+      // Otomatis lompat ke soal belum terjawab berikutnya jika ada
+      const nextUnanswered = questionsState.findIndex((q, i) => i > currentQuestionIndex && !q.isLocked);
+      if (nextUnanswered !== -1) {
+        currentQuestionIndex = nextUnanswered;
+        renderCurrentQuestion();
+      } else {
+        // Cek dari awal apakah masih ada yang belum
+        const anyUnanswered = questionsState.findIndex(q => !q.isLocked);
+        if (anyUnanswered !== -1 && anyUnanswered !== currentQuestionIndex) {
+          currentQuestionIndex = anyUnanswered;
+          renderCurrentQuestion();
+        }
+      }
+    }
+
+    /* ========================================================
+       8. SELESAI UJIAN & PERHITUNGAN NILAI
+       ======================================================== */
+    function promptFinishExam() {
+      const answered = questionsState.filter(q => q.isLocked).length;
+      const unanswered = 30 - answered;
+
+      let msg = "Apakah kamu sudah yakin ingin menyelesaikan ujian?";
+      if (unanswered > 0) {
+        msg = `Kamu masih memiliki <strong>${unanswered} nomor soal</strong> yang belum dijawab. Soal yang belum dijawab akan otomatis dihitung sebagai salah. Apakah kamu yakin ingin menyelesaikan sekarang?`;
+      } else {
+        msg = "Hebat! Semua <strong>30 soal</strong> telah kamu kerjakan. Siap melihat nilai perolehanmu?";
+      }
+
+      showConfirmDialog({
+        emoji: unanswered > 0 ? '⚠️' : '🎉',
+        title: 'Selesaikan Ujian Sekarang?',
+        message: msg,
+        confirmText: 'Ya, Selesai Ujian!',
+        confirmClass: 'pixar-btn-green',
+        onConfirm: () => {
+          finishExam(false);
+        }
+      });
+    }
+
+    function confirmFinishExam() {
+      promptFinishExam();
+    }
+
+    function finishExam(isTimeout) {
+      if (timerInterval) {
+        clearInterval(timerInterval);
+        timerInterval = null;
+      }
+
+      // Kunci semua soal yang belum terjawab
+      questionsState.forEach(q => {
+        if (!q.isLocked) {
+          q.isLocked = true;
+          q.userAnswer = "(Tidak dijawab)";
+          q.isCorrect = false;
+        }
+      });
+
+      const result = saveStudentResult(true);
+
+      // Tampilkan Result Screen Siswa
+      document.getElementById('resStudentName').textContent = currentUser.name;
+      document.getElementById('resStudentClass').textContent = "Kelas " + currentUser.kelas;
+      document.getElementById('resStudentTime').textContent = result.completedTime;
+      document.getElementById('resFinalScore').textContent = result.finalScore;
+      document.getElementById('resCorrectCount').textContent = result.correctCount;
+      document.getElementById('resWrongCount').textContent = result.wrongCount;
+
+      const emoji = document.getElementById('resultEmoji');
+      const title = document.getElementById('resultTitle');
+      const subtitle = document.getElementById('resultSubtitle');
+
+      if (result.finalScore >= 80) {
+        emoji.textContent = "🏆";
+        title.textContent = "Sangat Membanggakan!";
+        subtitle.textContent = "Pertahankan prestasimu dan teruslah berbuat baik!";
+      } else if (result.finalScore >= 60) {
+        emoji.textContent = "🎉";
+        title.textContent = "Bagus Sekali!";
+        subtitle.textContent = "Kamu sudah belajar dengan baik, tingkatkan lagi ya!";
+      } else {
+        emoji.textContent = "💪";
+        title.textContent = "Tetap Semangat!";
+        subtitle.textContent = "Jangan berkecil hati, belajar lebih giat lagi bersama Tuhan Yesus!";
+      }
+
+      switchView('viewResultSiswa');
+    }
+
+    function saveStudentResult(completedNormally) {
+      let correct = 0;
+      let wrong = 0;
+
+      questionsState.forEach(q => {
+        if (q.isCorrect === true) {
+          correct++;
+        } else {
+          wrong++;
+        }
+      });
+
+      // Nilai = (jumlah benar / 30) * 100
+      const finalScore = Math.round((correct / 30) * 100);
+
+      const record = {
+        id: 'RES_' + Date.now(),
+        name: currentUser.name,
+        kelas: currentUser.kelas,
+        correctCount: correct,
+        wrongCount: wrong,
+        finalScore: finalScore,
+        completedTime: new Date().toLocaleTimeString('id-ID', { hour: '2-digit', minute: '2-digit', second: '2-digit' }),
+        details: questionsState.map(q => ({
+          id: q.id,
+          subbab: q.subbab,
+          question: q.question,
+          type: q.type,
+          userAnswer: q.userAnswer || '-',
+          correctDisplay: q.type === 'multiple' ? q.correctAnswer : q.displayAnswer,
+          isCorrect: !!q.isCorrect
+        }))
+      };
+
+      // Simpan ke localStorage
+      try {
+        const existingData = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+        existingData.unshift(record); // Data terbaru di paling atas
+        localStorage.setItem(STORAGE_KEY, JSON.stringify(existingData));
+      } catch (e) {
+        console.error("Storage error:", e);
+      }
+
+      return record;
+    }
+
+    /* ========================================================
+       9. MODE GURU (DAFTAR NILAI, DETAIL JAWABAN, CETAK)
+       ======================================================== */
+    function getStoredResults() {
+      try {
+        return JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      } catch (e) {
+        return [];
+      }
+    }
+
+    function renderGuruTable() {
+      const allResults = getStoredResults();
+      const filter = document.getElementById('filterKelasGuru').value;
+
+      const filtered = (filter === 'ALL') 
+        ? allResults 
+        : allResults.filter(r => r.kelas === filter);
+
+      // Hitung Statistik
+      const totalStudents = filtered.length;
+      let avgScore = 0;
+      let maxScore = 0;
+
+      if (totalStudents > 0) {
+        const sum = filtered.reduce((acc, curr) => acc + curr.finalScore, 0);
+        avgScore = Math.round(sum / totalStudents);
+        maxScore = Math.max(...filtered.map(r => r.finalScore));
+      }
+
+      document.getElementById('statTotalStudents').textContent = totalStudents;
+      document.getElementById('statAvgScore').textContent = avgScore;
+      document.getElementById('statMaxScore').textContent = maxScore;
+
+      const tbody = document.getElementById('guruTableBody');
+      tbody.innerHTML = '';
+
+      if (filtered.length === 0) {
+        tbody.innerHTML = `
+          <tr>
+            <td colspan="8" class="text-center py-8 text-slate-400">
+              <i class="fa-solid fa-folder-open text-3xl mb-2 block"></i>
+              Belum ada data nilai ujian siswa yang tersimpan.
+            </td>
+          </tr>
+        `;
+        return;
+      }
+
+      filtered.forEach((item, index) => {
+        const tr = document.createElement('tr');
+        tr.className = "hover:bg-slate-50 transition border-b border-slate-100";
+
+        // Score Badge Color
+        let scoreBadgeClass = "bg-emerald-100 text-emerald-800";
+        if (item.finalScore < 60) scoreBadgeClass = "bg-rose-100 text-rose-800";
+        else if (item.finalScore < 80) scoreBadgeClass = "bg-amber-100 text-amber-800";
+
+        tr.innerHTML = `
+          <td class="px-4 py-3 text-center font-bold text-slate-400">${index + 1}</td>
+          <td class="px-4 py-3 font-bold text-slate-800 flex items-center gap-2">
+            <span class="w-7 h-7 rounded-full bg-sky-100 text-sky-700 flex items-center justify-center text-xs">👤</span>
+            ${item.name}
+          </td>
+          <td class="px-4 py-3 text-center font-semibold text-slate-600">
+            <span class="px-2.5 py-1 rounded-full bg-slate-100 text-slate-700 text-xs">${item.kelas}</span>
+          </td>
+          <td class="px-4 py-3 text-center font-bold text-emerald-600">${item.correctCount}</td>
+          <td class="px-4 py-3 text-center font-bold text-rose-500">${item.wrongCount}</td>
+          <td class="px-4 py-3 text-center">
+            <span class="px-3 py-1 rounded-xl text-xs font-fun font-bold ${scoreBadgeClass}">
+              ${item.finalScore}
+            </span>
+          </td>
+          <td class="px-4 py-3 text-center text-xs text-slate-400 font-medium">${item.completedTime}</td>
+          <td class="px-4 py-3 text-center">
+            <button onclick="viewStudentDetail('${item.id}')" class="pixar-btn pixar-btn-purple px-3 py-1 text-xs cursor-pointer">
+              <i class="fa-solid fa-eye"></i> Lihat Jawaban
+            </button>
+          </td>
+        `;
+        tbody.appendChild(tr);
+      });
+    }
+
+    function viewStudentDetail(recordId) {
+      const all = getStoredResults();
+      const record = all.find(r => r.id === recordId);
+      if (!record) return;
+
+      document.getElementById('detailModalTitle').textContent = `Detail Jawaban: ${record.name}`;
+      document.getElementById('detailModalSubtitle').textContent = `Kelas ${record.kelas} • Skor Akhir: ${record.finalScore} (Benar: ${record.correctCount}, Salah: ${record.wrongCount})`;
+
+      const listContainer = document.getElementById('detailQuestionsList');
+      listContainer.innerHTML = '';
+
+      record.details.forEach(q => {
+        const card = document.createElement('div');
+        card.className = `p-3.5 rounded-2xl border-2 text-xs sm:text-sm ${q.isCorrect ? 'bg-emerald-50/70 border-emerald-200' : 'bg-rose-50/70 border-rose-200'}`;
+
+        card.innerHTML = `
+          <div class="flex items-start justify-between gap-2 mb-1.5">
+            <span class="font-bold text-slate-800">No. ${q.id} (${q.type === 'multiple' ? 'PG' : 'Isian'})</span>
+            <span class="px-2 py-0.5 rounded-full text-[10px] font-bold ${q.isCorrect ? 'bg-emerald-200 text-emerald-800' : 'bg-rose-200 text-rose-800'}">
+              ${q.isCorrect ? '✓ Benar' : '✗ Salah'}
+            </span>
+          </div>
+          <p class="text-slate-700 font-medium mb-2">${q.question}</p>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-2 text-xs bg-white/80 p-2.5 rounded-xl border border-slate-200">
+            <div>
+              <span class="text-slate-400 block font-semibold">Jawaban Siswa:</span>
+              <span class="font-bold ${q.isCorrect ? 'text-emerald-700' : 'text-rose-600'}">${q.userAnswer}</span>
+            </div>
+            <div>
+              <span class="text-slate-400 block font-semibold">Kunci Jawaban:</span>
+              <span class="font-bold text-slate-700">${q.correctDisplay}</span>
+            </div>
+          </div>
+        `;
+        listContainer.appendChild(card);
+      });
+
+      document.getElementById('modalDetailJawaban').classList.remove('hidden');
+    }
+
+    function closeDetailModal() {
+      document.getElementById('modalDetailJawaban').classList.add('hidden');
+    }
+
+    function clearStudentResults() {
+      showConfirmDialog({
+        emoji: '🗑️',
+        title: 'Hapus Semua Data Nilai?',
+        message: 'Apakah Anda yakin ingin mereset dan menghapus seluruh daftar nilai siswa yang ada? Tindakan ini tidak dapat dibatalkan.',
+        confirmText: 'Ya, Hapus Semua',
+        confirmClass: 'pixar-btn-red',
+        onConfirm: () => {
+          localStorage.removeItem(STORAGE_KEY);
+          renderGuruTable();
+        }
+      });
+    }
+
+    /* Cetak Laporan Mode Guru */
+    function printGradeList() {
+      const allResults = getStoredResults();
+      const filter = document.getElementById('filterKelasGuru').value;
+      const filtered = (filter === 'ALL') ? allResults : allResults.filter(r => r.kelas === filter);
+
+      if (filtered.length === 0) {
+        showFeedbackPopup({
+          emoji: '📄',
+          title: 'Tidak Ada Data',
+          text: 'Belum ada data nilai yang dapat dicetak. Siswa perlu mengerjakan ujian terlebih dahulu.',
+          btnText: 'Tutup',
+          isCorrect: false
+        });
+        return;
+      }
+
+      // Populate Print Table
+      const printBody = document.getElementById('printTableBody');
+      printBody.innerHTML = '';
+
+      filtered.forEach((item, index) => {
+        const row = `
+          <tr style="height: 26px; text-align: center;">
+            <td>${index + 1}</td>
+            <td style="text-align: left; padding-left: 8px;">${item.name}</td>
+            <td>${item.kelas}</td>
+            <td>${item.correctCount}</td>
+            <td>${item.wrongCount}</td>
+            <td style="font-weight: bold;">${item.finalScore}</td>
+            <td>${item.completedTime}</td>
+          </tr>
+        `;
+        printBody.insertAdjacentHTML('beforeend', row);
+      });
+
+      // Tanggal Cetak
+      const now = new Date();
+      const options = { day: 'numeric', month: 'long', year: 'numeric' };
+      document.getElementById('printCurrentDate').textContent = now.toLocaleDateString('id-ID', options);
+
+      // Trigger Print
+      window.print();
+    }
+
+    // Inisialisasi awal saat load
+    window.onload = function() {
+      switchView('viewLanding');
+    };
+  </script>
+</body>
+</html>
